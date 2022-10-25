@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import '@fortawesome/fontawesome-free/js/all';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './cookery/store';
 
 ReactDOM.render(
   <React.StrictMode>
