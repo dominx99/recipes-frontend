@@ -1,6 +1,6 @@
 FROM node:19
 
-COPY --from=node:19 /usr/local/bin/node /usr/local/sbin/php
+COPY --from=node:19 /usr/local/bin/node /usr/local/sbin/node
 
 WORKDIR /application
 
