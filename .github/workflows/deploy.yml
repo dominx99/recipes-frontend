@@ -35,7 +35,7 @@ jobs:
           secrets: |
             secret/data/recipes/backend DOMAIN | DOMAIN ;
             secret/data/recipes/backend APP_ENV | APP_ENV ;
-            secret/data/recipes/backend REACT_APP_API_BASE_URL=https | REACT_APP_API_BASE_URL ;
+            secret/data/recipes/backend REACT_APP_API_BASE_URL | REACT_APP_API_BASE_URL ;
 
       - name: Copy application environment to .env file
         run: 'envsubst < .env.tmpl > .env'
