@@ -3,7 +3,6 @@ version: '3'
 services:
   recipes_nodejs:
     restart: unless-stopped
-    entrypoint: "/bin/sh ./docker-entrypoint-prod.sh"
     build:
       context: .
       dockerfile: Dockerfile-prod

@@ -1,5 +1,7 @@
 FROM node:19
 
+COPY --from=node:19 /usr/local/bin/node /usr/local/sbin/php
+
 WORKDIR /application
 
 COPY . .
@@ -9,3 +11,5 @@ RUN npm run build
 RUN npm install -g serve
 
 ENV PATH /application/node_modules/.bin:$PATH
+
+CMD ["serve", "-s", "build", "-l", "8114"]
