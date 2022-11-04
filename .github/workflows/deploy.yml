@@ -48,7 +48,7 @@ jobs:
           files: 'docker-compose-prod.yml'
           targets: 'recipes_nodejs'
           set: |
-            recipes_nodejs.platform=linux/arm64
+            recipes_nodejs.platform=linux/arm64v8
 
       - name: Copy docker-compose to the OCI instance
         uses: appleboy/scp-action@master
