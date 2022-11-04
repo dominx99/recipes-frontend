@@ -3,10 +3,11 @@ version: '3'
 services:
   recipes_nodejs:
     restart: unless-stopped
-    entrypoint: "/bin/sh ./docker-entrypoint-dev.sh"
+    entrypoint: "/bin/sh ./docker-entrypoint-prod.sh"
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
+    image: ghcr.io/dominx99/recipes-nodejs
     volumes:
       - .:/application
     environment:
