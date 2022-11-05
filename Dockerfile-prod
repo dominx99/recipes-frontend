@@ -1,4 +1,4 @@
-FROM node:lts-hydrogen
+FROM node:lts-slim
 
 RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
