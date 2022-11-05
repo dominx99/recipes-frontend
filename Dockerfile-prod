@@ -1,17 +1,14 @@
-FROM docker.io/node:18-alpine
+FROM node:lts
 
 RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
 WORKDIR /application
 
-COPY package.json package.json
-COPY package-lock.json package-lock.json
-
-RUN npm ci --omit=dev
-
 COPY . .
-RUN npm run build
-RUN npm install -g serve
+
+RUN yarn install --production --network-timeout 100000
+RUN yarn build
+RUN yarn install -g serve
 
 ENV PATH /application/node_modules/.bin:$PATH
 
