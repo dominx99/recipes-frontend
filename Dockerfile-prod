@@ -1,4 +1,4 @@
-FROM node:lts-buster
+FROM node:lts-alpine
 
 RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
