@@ -1,5 +1,7 @@
 FROM node:19
 
+RUN echo /usr/bin/
+RUN echo /usr/local/bin
 RUN ln -s /usr/bin/nodejs /usr/sbin/node
 
 WORKDIR /application
