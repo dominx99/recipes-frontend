@@ -6,9 +6,8 @@ WORKDIR /application
 
 COPY . .
 
-RUN yarn config delete proxy
-RUN yarn config delete https-proxy
-RUN yarn install --production
+RUN yarn config set script-shell $(which sh)
+RUN yarn install --production --network-timeout 10000000
 RUN yarn build
 RUN yarn install -g serve
 
