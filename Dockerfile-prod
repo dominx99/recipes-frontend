@@ -1,4 +1,4 @@
-FROM node:19
+FROM node:lts
 
 RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
@@ -6,6 +6,7 @@ WORKDIR /application
 
 COPY . .
 
+RUN mkdir node_modules
 RUN npm ci --omit=dev
 RUN npm run build
 RUN npm install -g serve
