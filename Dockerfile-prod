@@ -6,7 +6,7 @@ WORKDIR /application
 
 COPY . .
 
-RUN yarn install --production --network-timeout 100000
+RUN yarn install --production --network-timeout 10000000
 RUN yarn build
 RUN yarn install -g serve
 
