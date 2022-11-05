@@ -1,6 +1,4 @@
-FROM node:lts
-
-ENV DISABLE_OPENCOLLECTIVE true
+FROM node:lts-buster
 
 RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
@@ -9,7 +7,6 @@ WORKDIR /application
 COPY . .
 
 RUN mkdir node_modules
-RUN npm config set unsafe-perm true
 RUN npm ci --omit=dev
 RUN npm run build
 RUN npm install -g serve

@@ -9,9 +9,6 @@ services:
     image: ghcr.io/dominx99/recipes-nodejs
     volumes:
       - .:/application
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - DISABLE_OPENCOLLECTIVE=true
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
