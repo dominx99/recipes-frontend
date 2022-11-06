@@ -8,7 +8,7 @@ COPY . .
 
 RUN yarn config set script-shell $(which sh)
 RUN yarn config set unsafe-perm true
-RUN yarn install --production --network-timeout 10000000
+RUN yarn install --production --network-timeout 10000000 --force
 RUN yarn build
 RUN yarn global add serve
 
