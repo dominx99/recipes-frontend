@@ -1,4 +1,6 @@
-FROM node:16
+FROM node:16.14.2-buster
+
+RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
 WORKDIR /application
 
