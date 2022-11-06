@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:14.17
 
 RUN ln -s /usr/local/bin/node /usr/local/sbin/node
 
