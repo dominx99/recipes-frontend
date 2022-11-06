@@ -3,14 +3,10 @@ version: '3'
 services:
   recipes_nodejs:
     restart: unless-stopped
-    entrypoint: "/bin/sh ./docker-entrypoint-dev.sh"
     build:
       context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/application
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      dockerfile: Dockerfile-prod
+    image: ghcr.io/dominx99/recipes-nodejs
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
