@@ -6,6 +6,8 @@ WORKDIR /application
 
 COPY . .
 
+RUN mkdir node_modules
+RUN chmod 777 -R node_modules
 RUN yarn config set script-shell $(which sh)
 RUN yarn install --production --network-timeout 10000000
 RUN yarn build
