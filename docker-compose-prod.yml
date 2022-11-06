@@ -7,8 +7,6 @@ services:
       context: .
       dockerfile: Dockerfile-prod
     image: ghcr.io/dominx99/recipes-nodejs
-    volumes:
-      - .:/application
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
