@@ -13,7 +13,7 @@ run:
 	@docker-compose exec nodejs npm run start
 
 lint:
-	@docker-compose exec nodejs_household eslint --fix-dry-run src/
+	@docker-compose exec recipes_nodejs eslint --fix-dry-run src/
 
 git-pull:
 	git pull

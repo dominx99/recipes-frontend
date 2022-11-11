@@ -3,7 +3,7 @@ import axios from './../../axios';
 
 export function fetchAllIngredients() {
   return new Promise<{ data: Ingredient[] }>(async (resolve) => {
-    const res = await axios().get('api/v1/main-tags')
+    const res = await axios().get('api/v1/main-products')
 
     resolve(res);
   });

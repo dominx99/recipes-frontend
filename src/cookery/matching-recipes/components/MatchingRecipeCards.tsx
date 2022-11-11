@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, List, ListItem, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Grid, List, ListItem, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import { RecipeComponent } from "../../recipe-components/domain/RecipeComponent";
 import { matchingRecipeSelectors } from "../api/MatchingRecipesSlice";
