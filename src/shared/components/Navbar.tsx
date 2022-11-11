@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Autocomplete, Checkbox, Chip, TextField } from '@mui/material';
+import { Autocomplete, Chip, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../cookery/hooks';
 import { selectAllIngredients } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
