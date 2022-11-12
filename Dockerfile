@@ -1,8 +1,5 @@
-FROM node:19
+FROM node:16.14.2-buster
 
-RUN mkdir -p /application
 WORKDIR /application
 
 ENV PATH /application/node_modules/.bin:$PATH
-
-COPY . ./
