@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Grid, List, ListItem, Typography } from "@mui/material";
+import { Card, CardContent, Grid, List, ListItem, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import { RecipeComponent } from "../../recipe-components/domain/RecipeComponent";
 import { matchingRecipeSelectors } from "../api/MatchingRecipesSlice";
@@ -27,10 +27,6 @@ export default function MatchingRecipeCards(props: Props) {
                 ))}
               </List>
             </CardContent>
-            <CardActions>
-              <Button size="small">View</Button>
-              <Button size="small">Edit</Button>
-            </CardActions>
           </Card>
         </Grid>
       ))}

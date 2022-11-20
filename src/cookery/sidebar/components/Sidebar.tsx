@@ -1,17 +1,29 @@
-import { Chip, Drawer, Grid, List, ListItem, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { ChevronRight } from "@mui/icons-material";
+import { Chip, Drawer, Grid, IconButton, List, ListItem, styled, SwipeableDrawer, Typography } from "@mui/material";
+import { SyntheticEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deselectIngredient, ingredientSelectors, selectAllCategories, selectIngredient } from "../../ingredients/api/IngredientsSlice";
 import { Ingredient } from "../../ingredients/domain/Ingredient";
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from "../../matching-recipes/api/MatchingRecipesSlice";
+import { isSidebarOpen, toggleSidebar } from "../../shared/slice/LayoutSlice";
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-start',
+}));
 
 export default function Sidebar() {
+  const dispatch = useAppDispatch();
   const categories = useAppSelector(selectAllCategories);
   const ingredients = useAppSelector(ingredientSelectors.selectEntities);
-  const dispatch = useAppDispatch();
   const selectedIngredientNames = useAppSelector(ingredientSelectors.selectAll)
     .filter(ingredient => ingredient.selected)
     .map(ingredient => ingredient.name);
+
+  const isOpen = useAppSelector(isSidebarOpen);
 
   useEffect(() => {
     dispatch(fetchMatchingMatchingRecipesByIngredientsAsync(selectedIngredientNames));
@@ -29,12 +41,22 @@ export default function Sidebar() {
     }
   };
 
+  const handleDrawerClose = () => {
+    dispatch(toggleSidebar());
+  }
+
   return (
-    <Drawer
-      variant="permanent"
+    <SwipeableDrawer
       anchor={'right'}
-      open={true}
+      open={isOpen}
+      onClose={handleDrawerClose}
+      onOpen={handleDrawerClose}
     >
+      <DrawerHeader>
+        <IconButton onClick={handleDrawerClose}>
+          <ChevronRight />
+        </IconButton>
+      </DrawerHeader>
       {categories.map((category) => (
         <List sx={{ width: 300 }} key={category.id}>
           <ListItem>
@@ -61,7 +83,6 @@ export default function Sidebar() {
           </ListItem>
         </List>
       ))}
-    </Drawer>
+    </SwipeableDrawer>
   )
-
 }
