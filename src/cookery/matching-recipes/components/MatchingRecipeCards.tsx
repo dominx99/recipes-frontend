@@ -21,7 +21,7 @@ export default function MatchingRecipeCards(props: Props) {
               </Typography>
               <List>
                 {matchingRecipe.recipe.components.map((component: RecipeComponent) => (
-                  <ListItem key={component.ingredient.id}>
+                  <ListItem key={component.id}>
                     {component.ingredient.name} ({component.measure?.formatted_quantity} {component.measure?.unit?.name})
                   </ListItem>
                 ))}
