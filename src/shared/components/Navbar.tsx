@@ -10,10 +10,15 @@ import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent } from 'react';
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
+import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
   const dispatch = useAppDispatch();
+
+  const selectedIngredientsCount = useAppSelector(selectAllIngredients)
+    .filter(ingredient => ingredient.selected)
+    .length;
 
   const onIngredientsChange = (
     event: BaseSyntheticEvent,
@@ -33,6 +38,10 @@ export default function Navbar() {
       ingredients.map(ingredient => ingredient.name)
     ));
   };
+
+  const handleOpenSidebar = () => {
+    dispatch(toggleSidebar());
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -64,9 +73,9 @@ export default function Navbar() {
             renderTags={() => (<></>)}
           />
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
+          <Box>
+            <IconButton size="medium" color="inherit" onClick={handleOpenSidebar}>
+              <Badge badgeContent={selectedIngredientsCount} color="primary">
                 <MenuIcon />
               </Badge>
             </IconButton>
