@@ -34,9 +34,9 @@ export default function Navbar() {
       dispatch(deselectIngredient(details?.option));
     }
 
-    dispatch(fetchMatchingMatchingRecipesByIngredientsAsync(
-      ingredients.map(ingredient => ingredient.name)
-    ));
+    dispatch(fetchMatchingMatchingRecipesByIngredientsAsync({
+      ingredients: ingredients.map(ingredient => ingredient.name),
+    }));
   };
 
   const handleOpenSidebar = () => {

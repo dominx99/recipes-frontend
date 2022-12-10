@@ -1,6 +1,6 @@
 import { ChevronRight } from "@mui/icons-material";
-import { Chip, Drawer, Grid, IconButton, List, ListItem, styled, SwipeableDrawer, Typography } from "@mui/material";
-import { SyntheticEvent, useEffect } from "react";
+import { Chip, Grid, IconButton, List, ListItem, styled, SwipeableDrawer, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deselectIngredient, ingredientSelectors, selectAllCategories, selectIngredient } from "../../ingredients/api/IngredientsSlice";
 import { Ingredient } from "../../ingredients/domain/Ingredient";
@@ -19,15 +19,14 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectAllCategories);
   const ingredients = useAppSelector(ingredientSelectors.selectEntities);
-  const selectedIngredientNames = useAppSelector(ingredientSelectors.selectAll)
-    .filter(ingredient => ingredient.selected)
-    .map(ingredient => ingredient.name);
-
+  const allIngredients = useAppSelector(ingredientSelectors.selectAll);
   const isOpen = useAppSelector(isSidebarOpen);
 
   useEffect(() => {
-    dispatch(fetchMatchingMatchingRecipesByIngredientsAsync(selectedIngredientNames));
-  }, [dispatch, selectedIngredientNames]);
+    dispatch(fetchMatchingMatchingRecipesByIngredientsAsync({
+      ingredients: allIngredients.filter(ingredient => ingredient.selected).map(ingredient => ingredient.name),
+    }));
+  }, [dispatch, allIngredients]);
 
   const ingredientClickedHandler = (ingredient?: Ingredient) => {
     if (ingredient === undefined) {
