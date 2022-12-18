@@ -1,5 +1,5 @@
 import { Ingredient } from '../../ingredients/domain/Ingredient';
-import axios from './../../axios';
+import axios from './../../app/axios';
 
 export interface CategoryResponse {
   id: string,

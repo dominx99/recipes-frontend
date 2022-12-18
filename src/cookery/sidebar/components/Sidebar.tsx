@@ -1,7 +1,7 @@
 import { ChevronRight } from "@mui/icons-material";
 import { Chip, Grid, IconButton, List, ListItem, styled, SwipeableDrawer, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deselectIngredient, ingredientSelectors, selectAllCategories, selectIngredient } from "../../ingredients/api/IngredientsSlice";
 import { Ingredient } from "../../ingredients/domain/Ingredient";
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from "../../matching-recipes/api/MatchingRecipesSlice";

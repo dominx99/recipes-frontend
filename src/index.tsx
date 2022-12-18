@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 import '@fortawesome/fontawesome-free/js/all';
 import { Provider } from 'react-redux';
-import { store } from './cookery/store';
+import { store } from './cookery/app/store';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

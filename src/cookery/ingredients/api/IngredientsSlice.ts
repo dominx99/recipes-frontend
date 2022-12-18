@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 import { CategoryResponse, fetchAllCategoriesWithIngredients } from '../../categories/api/CategoriesAPI';
 import { Category } from '../../categories/domain/Category';
-import { RootState } from '../../store';
 import { Ingredient } from '../domain/Ingredient';
 import { fetchAllIngredients } from './IngredientsAPI';
 

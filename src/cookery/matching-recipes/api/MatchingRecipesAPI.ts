@@ -1,4 +1,4 @@
-import axios from "../../axios";
+import axios from "../../app/axios";
 import { MatchingRecipe } from "../domain/MatchingRecipe";
 
 export interface PaginatedResponse<T> {

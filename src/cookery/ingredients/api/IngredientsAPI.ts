@@ -1,5 +1,5 @@
 import { Ingredient } from '../domain/Ingredient';
-import axios from './../../axios';
+import axios from './../../app/axios';
 
 export function fetchAllIngredients() {
   return new Promise<{ data: Ingredient[] }>(async (resolve) => {

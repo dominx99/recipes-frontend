@@ -5,12 +5,12 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../cookery/hooks';
 import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent } from 'react';
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
+import { useAppDispatch, useAppSelector } from '../../cookery/app/hooks';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);

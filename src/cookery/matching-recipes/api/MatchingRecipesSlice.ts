@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { RootState } from '../../app/store';
 import { MatchingRecipe } from '../domain/MatchingRecipe';
 import { fetchMatchingRecipesByIngredients } from './MatchingRecipesAPI';
 
