@@ -3,5 +3,6 @@ export interface Measure {
   formatted_quantity: string | null;
   unit: {
     name: string;
+    value: string;
   } | null
 }

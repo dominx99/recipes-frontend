@@ -1,4 +1,5 @@
-import { Card, CardContent, List, ListItem, Typography } from "@mui/material";
+import { Card, CardContent, Grid, List, ListItem, Typography } from "@mui/material";
+import Measure from "../../measures/components/Measure";
 import { RecipeComponent } from "../../recipe-components/domain/RecipeComponent";
 import { Recipe } from "../domain/MatchingRecipe";
 
@@ -15,8 +16,19 @@ export default function MatchingRecipeCard({ recipe }: MatchingRecipeCardProps) 
         </Typography>
         <List>
           {recipe.components.map((component: RecipeComponent) => (
-            <ListItem key={component.id}>
-              {component.ingredient.name} ({component.measure?.formatted_quantity} {component.measure?.unit?.name})
+            <ListItem key={component.id} disableGutters>
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  <Typography>
+                    {component.ingredient.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography textAlign={'right'}>
+                    <Measure measure={component.measure} />
+                  </Typography>
+                </Grid>
+              </Grid>
             </ListItem>
           ))}
         </List>
