@@ -3,6 +3,7 @@ import { ingredientsSlice } from "./../ingredients/api/IngredientsSlice";
 import { matchingRecipesSlice } from "./../matching-recipes/api/MatchingRecipesSlice";
 import { layoutSlice } from "./../shared/slice/LayoutSlice";
 import authenticationSlice from "./../authentication/api/AuthenticationSlice";
+import accountSlice from "./../account/api/AccountSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     matchingRecipes: matchingRecipesSlice.reducer,
     layout: layoutSlice.reducer,
     authentication: authenticationSlice,
+    account: accountSlice,
   },
 });
 

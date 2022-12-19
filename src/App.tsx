@@ -6,6 +6,7 @@ import HomePage from './cookery/shared/pages/HomePage';
 import RequireNonAuthentication from './cookery/app/router/RequireNonAuthentication';
 import RouteList from './cookery/app/router/RouteList';
 import LoginPage from './cookery/authentication/pages/LoginPage';
+import RegisterPage from './cookery/authentication/pages/RegisterPage';
 
 function App() {
   return (
@@ -19,6 +20,12 @@ function App() {
           <Route path={RouteList.AUTHENTICATE} element={
             <RequireNonAuthentication redirectTo={RouteList.DASHBOARD}>
               <LoginPage />
+            </RequireNonAuthentication>
+          }/>
+
+          <Route path={RouteList.REGISTER} element={
+            <RequireNonAuthentication redirectTo={RouteList.DASHBOARD}>
+              <RegisterPage />
             </RequireNonAuthentication>
           }/>
         </Routes>
