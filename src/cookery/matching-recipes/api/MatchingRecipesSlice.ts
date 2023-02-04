@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { RootState } from '../../../shared/app/store';
 import { MatchingRecipe } from '../domain/MatchingRecipe';
 import { fetchMatchingRecipesByIngredients } from './MatchingRecipesAPI';
 
@@ -86,3 +86,5 @@ export const {
 
 export const selectFetchMatchingRecipesLoading = (state: RootState) => state.matchingRecipes.loading.matchingRecipes;
 export const nextMatchingRecipesUrlSelector = (state: RootState) => state.matchingRecipes.next_page_url;
+
+export default matchingRecipesSlice.reducer;

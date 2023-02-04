@@ -10,7 +10,7 @@ import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent } from 'react';
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
-import { useAppDispatch, useAppSelector } from '../../cookery/app/hooks';
+import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);

@@ -5,7 +5,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useCallback } from "react";
 import { Ingredient } from "../../ingredients/domain/Ingredient";
 import { selectAllIngredients } from "../../ingredients/api/IngredientsSlice";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 
 interface Props {
 }

@@ -1,13 +1,13 @@
 import { LoadingButton } from "@mui/lab";
 import { Card, CardContent, CardHeader, FormGroup, Grid, Link, Stack, TextField, Typography } from "@mui/material";
 import { useState, KeyboardEvent, useEffect } from "react";
-import { CreateUserForm } from "../../account/api/AccountForms";
 import { addUserAsync, addUserErrorsGetter, addUserLoadingGetter, clearSuccessfullyCreatedUser, successfulyCreatedUserGetter } from "../../account/api/AccountSlice";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import RouteList from "../../app/router/RouteList";
-import { getValidationErrorFor, hasValidationErrorFor } from "../../shared/api/Errors";
+import AuthenticationRouteList from "../../app/routes/AuthenticationRouteList";
 import { createUserFormToAuthenticationCredentialsConverter } from "../api/AuthenticationForms";
 import { authenticateAsync } from "../api/AuthenticationSlice";
+import { getValidationErrorFor, hasValidationErrorFor } from "../../../shared/api/Errors";
+import { CreateUserForm } from "../../account/api/AccountForms";
+import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 
 export default function RegisterForm() {
   const dispatch = useAppDispatch();
@@ -107,7 +107,7 @@ export default function RegisterForm() {
 
             <Typography textAlign="center">
               Already registered?&nbsp;
-              <Link href={RouteList.AUTHENTICATE}>Sign in</Link>
+              <Link href={AuthenticationRouteList.AUTHENTICATE}>Sign in</Link>
             </Typography>
           </Stack>
         </CardContent>

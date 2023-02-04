@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import { RootState } from "../../../shared/app/store";
 import { authenticate, invalidateToken } from "./AuthenticationAPI";
 
 export interface AuthenticationCredentials {
@@ -38,7 +38,7 @@ export const invalidateTokenAsync = createAsyncThunk(
   }
 )
 
-const authenticationSlice = createSlice({
+export const authenticationSlice = createSlice({
   name: "authentication",
   initialState,
   reducers: {

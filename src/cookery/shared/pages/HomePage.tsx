@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import { useAppDispatch } from "../../../shared/app/hooks";
 import Navbar from "../../../shared/components/Navbar";
-import { useAppDispatch } from "../../app/hooks";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/IngredientsSlice";
 import MatchingRecipeCards from "../../matching-recipes/components/MatchingRecipeCards";
 import Sidebar from "../../sidebar/components/Sidebar";

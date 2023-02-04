@@ -3,31 +3,32 @@ import { ThemeProvider } from "@mui/system";
 import { ThemeWrapper } from "./shared/components/ThemeWrapper";
 import { Route, Routes } from "react-router-dom";
 import HomePage from './cookery/shared/pages/HomePage';
-import RequireNonAuthentication from './cookery/app/router/RequireNonAuthentication';
-import RouteList from './cookery/app/router/RouteList';
-import LoginPage from './cookery/authentication/pages/LoginPage';
-import RegisterPage from './cookery/authentication/pages/RegisterPage';
+import CookeryRouteList from './cookery/app/router/CookeryRouteList';
+import RequireNonAuthentication from './security/app/middleware/RequireNonAuthentication';
+import LoginPage from './security/authentication/pages/LoginPage';
+import RegisterPage from './security/authentication/pages/RegisterPage';
+import AuthenticationRouteList from './security/app/routes/AuthenticationRouteList';
 
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <ThemeWrapper>
         <Routes>
-          <Route path={RouteList.HOME} element={
+          <Route path={CookeryRouteList.HOME} element={
             <HomePage />
-          }/>
+          } />
 
-          <Route path={RouteList.AUTHENTICATE} element={
-            <RequireNonAuthentication redirectTo={RouteList.DASHBOARD}>
+          <Route path={AuthenticationRouteList.AUTHENTICATE} element={
+            <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
               <LoginPage />
             </RequireNonAuthentication>
-          }/>
+          } />
 
-          <Route path={RouteList.REGISTER} element={
-            <RequireNonAuthentication redirectTo={RouteList.DASHBOARD}>
+          <Route path={AuthenticationRouteList.REGISTER} element={
+            <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
               <RegisterPage />
             </RequireNonAuthentication>
-          }/>
+          } />
         </Routes>
       </ThemeWrapper>
     </ThemeProvider>
