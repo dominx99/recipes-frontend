@@ -1,19 +1,19 @@
 import { ReactElement } from "react";
 import { Navigate } from "react-router-dom";
+import { useAppSelector } from "../../../shared/app/hooks";
 import { authenticationDetails } from "../../authentication/api/AuthenticationSlice";
-import { useAppSelector } from "../hooks";
 
 interface Props {
   children: ReactElement<any, any>,
   redirectTo: string,
 }
 
-const RequireNonAuthentication = (props: Props) => {
+const RequireAuthentication = (props: Props) => {
   const details = useAppSelector(authenticationDetails);
 
   let isAuthenticated: boolean = details !== null;
 
-  return isAuthenticated ? <Navigate to={props.redirectTo} /> : props.children;
+  return isAuthenticated ? props.children : <Navigate to={props.redirectTo} />;
 }
 
-export default RequireNonAuthentication;
+export default RequireAuthentication;

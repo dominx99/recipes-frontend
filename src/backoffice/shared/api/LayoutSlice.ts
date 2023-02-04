@@ -27,6 +27,6 @@ export const {
   toggleSidebar,
 } = layoutSlice.actions;
 
-export const isSidebarOpen = (state: RootState) => state.cookeryLayout.sidebar.open;
+export const isSidebarOpen = (state: RootState) => state.backofficeLayout.sidebar.open;
 
 export default layoutSlice.reducer;

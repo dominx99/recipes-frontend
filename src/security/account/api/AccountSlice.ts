@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { ValidationErrors } from "../../shared/api/Errors";
+import { ValidationErrors } from "../../../shared/api/Errors";
+import { RootState } from "../../../shared/app/store";
 import { addUser } from "./AccountAPI";
 import { CreateUserForm } from "./AccountForms";
 

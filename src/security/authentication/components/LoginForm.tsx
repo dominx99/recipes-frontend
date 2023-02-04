@@ -1,10 +1,10 @@
 import { FC, useState, KeyboardEvent } from "react"
 import { Alert, Card, CardContent, CardHeader, FormGroup, Grid, Link, Stack, TextField, Typography } from "@mui/material"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { authenticateAsync, AuthenticationCredentials, authenticationMessage } from "./../api/AuthenticationSlice"
-import RouteList from "../../app/router/RouteList";
 import { Login } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import AuthenticationRouteList from "../../app/routes/AuthenticationRouteList";
+import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 
 interface Props {}
 
@@ -101,7 +101,7 @@ const LoginForm: FC<Props> = () => {
 
             <Typography textAlign="center">
               No account yet?&nbsp;
-              <Link href={RouteList.REGISTER}>Sign up</Link>
+              <Link href={AuthenticationRouteList.REGISTER}>Sign up</Link>
             </Typography>
           </Stack>
         </CardContent>
