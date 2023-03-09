@@ -11,6 +11,7 @@ import { BaseSyntheticEvent } from 'react';
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
+import { FavoriteRounded } from '@mui/icons-material';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
@@ -73,6 +74,13 @@ export default function Navbar() {
             renderTags={() => (<></>)}
           />
           <Box sx={{ flexGrow: 1 }} />
+          <Box>
+            <IconButton size="medium" color="inherit" href="/favorite">
+              <Badge badgeContent={selectedIngredientsCount} color="error">
+                <FavoriteRounded />
+              </Badge>
+            </IconButton>
+          </Box>
           <Box>
             <IconButton size="medium" color="inherit" onClick={handleOpenSidebar}>
               <Badge badgeContent={selectedIngredientsCount} color="primary">

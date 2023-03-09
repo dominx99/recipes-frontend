@@ -8,6 +8,7 @@ import RequireNonAuthentication from './security/app/middleware/RequireNonAuthen
 import LoginPage from './security/authentication/pages/LoginPage';
 import RegisterPage from './security/authentication/pages/RegisterPage';
 import AuthenticationRouteList from './security/app/routes/AuthenticationRouteList';
+import FavoriteRecipesPage from './cookery/favorite-recipes/pages/FavoriteRecipesPage';
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
         <Routes>
           <Route path={CookeryRouteList.HOME} element={
             <HomePage />
+          } />
+
+          <Route path={CookeryRouteList.FAVROITE_RECIPES} element={
+            <FavoriteRecipesPage />
           } />
 
           <Route path={AuthenticationRouteList.AUTHENTICATE} element={
