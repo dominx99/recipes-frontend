@@ -1,4 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
+import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
 import FavoriteRecipe from '../domain/FavoriteRecipe';
 import { addRecipeToFavorite } from './FavoriteRecipesAPI';
@@ -41,12 +42,15 @@ export const favoriteRecipesSlice = createSlice({
   },
 });
 
-
 export const {
   addFavoriteRecipe,
   updateFavoriteRecipe,
   removeFavoriteRecipe,
   setFavoriteRecipes
 } = favoriteRecipesSlice.actions;
+
+export const favoriteRecipesSelectors = favoriteRecipesAdapter.getSelectors<RootState>(
+  (state: RootState) => state.cookeryFavoriteRecipes.favoriteRecipes
+);
 
 export default favoriteRecipesSlice.reducer;

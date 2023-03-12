@@ -1,9 +1,10 @@
-import { FavoriteBorder } from "@mui/icons-material";
-import { Card, CardContent, CardHeader, Grid, IconButton, List, ListItem, Typography } from "@mui/material";
-import { useAppDispatch } from "../../../shared/app/hooks";
-import { addRecipeToFavoriteAsync } from "../../favorite-recipes/api/FavoriteRecipesSlice";
-import Measure from "../../measures/components/Measure";
-import { RecipeComponent } from "../../recipe-components/domain/RecipeComponent";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
+import { addRecipeToFavoriteAsync, favoriteRecipesSelectors } from "../../favorite-recipes/api/FavoriteRecipesSlice";
+import FavoriteRecipe from "../../favorite-recipes/domain/FavoriteRecipe";
+import RecipeCard from "../../recipes/components/RecipeCard";
 import { Recipe } from "../domain/MatchingRecipe";
 
 interface MatchingRecipeCardProps {
@@ -13,51 +14,34 @@ interface MatchingRecipeCardProps {
 export default function MatchingRecipeCard({ recipe }: MatchingRecipeCardProps) {
   const dispatch = useAppDispatch();
 
+  const favoriteRecipes: FavoriteRecipe[] = useAppSelector(favoriteRecipesSelectors.selectAll);
+
   const handleAddToFavorites = (recipe: Recipe) => () => {
     dispatch(addRecipeToFavoriteAsync(recipe));
   }
 
+  const isRecipeFavorite = useMemo(() => {
+    return favoriteRecipes.some((favoriteRecipe) => favoriteRecipe.recipeId === recipe.id);
+  }, [favoriteRecipes, recipe]);
+
   return (
-    <Card>
-      <CardHeader
-        sx={{ paddingBottom: 0 }}
-        title={
-          <Typography gutterBottom variant="h5" component="h2">
-            {recipe.name}
-          </Typography>
-        }
-        action={
-          <IconButton
-            onClick={handleAddToFavorites(recipe)}
-          >
-            <FavoriteBorder
-              color="error"
-            />
-          </IconButton>
-        }
-      />
-      <CardContent
-        sx={{ paddingTop: 0 }}
-      >
-        <List>
-          {recipe.components.map((component: RecipeComponent) => (
-            <ListItem key={component.id} disableGutters>
-              <Grid container spacing={2}>
-                <Grid item xs={8}>
-                  <Typography>
-                    {component.ingredient.name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography textAlign={'right'}>
-                    <Measure measure={component.measure} />
-                  </Typography>
-                </Grid>
-              </Grid>
-            </ListItem>
-          ))}
-        </List>
-      </CardContent>
-    </Card>
+    <RecipeCard
+      recipe={recipe}
+      action={
+        <IconButton
+          onClick={handleAddToFavorites(recipe)}
+        >
+          {
+            isRecipeFavorite
+              ? <Favorite
+                color="error"
+              />
+              : <FavoriteBorder
+                color="error"
+              />
+          }
+        </IconButton>
+      }
+    />
   );
 }

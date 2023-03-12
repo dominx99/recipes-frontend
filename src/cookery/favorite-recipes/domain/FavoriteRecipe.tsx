@@ -1,6 +1,6 @@
 export default interface FavoriteRecipe {
-  id: number;
-  recipeId: number;
-  userId: number;
+  id: string;
+  recipeId: string;
+  userId: string;
 }
 
