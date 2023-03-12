@@ -7,11 +7,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField } from '@mui/material';
 import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useMemo } from 'react';
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
 import { FavoriteRounded } from '@mui/icons-material';
+import { favoriteRecipesSelectors } from '../../cookery/favorite-recipes/api/FavoriteRecipesSlice';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
@@ -20,6 +21,12 @@ export default function Navbar() {
   const selectedIngredientsCount = useAppSelector(selectAllIngredients)
     .filter(ingredient => ingredient.selected)
     .length;
+
+  const favoriteRecipes = useAppSelector(favoriteRecipesSelectors.selectAll)
+
+  const favoriteRecipesCount: number = useMemo(() => {
+    return favoriteRecipes.length
+  }, [favoriteRecipes])
 
   const onIngredientsChange = (
     event: BaseSyntheticEvent,
@@ -76,7 +83,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             <IconButton size="medium" color="inherit" href="/favorite">
-              <Badge badgeContent={selectedIngredientsCount} color="error">
+              <Badge badgeContent={favoriteRecipesCount} color="error">
                 <FavoriteRounded />
               </Badge>
             </IconButton>
