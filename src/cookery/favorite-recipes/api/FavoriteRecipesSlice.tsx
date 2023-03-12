@@ -2,7 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from 
 import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
 import FavoriteRecipe from '../domain/FavoriteRecipe';
-import { addRecipeToFavorite } from './FavoriteRecipesAPI';
+import { addRecipeToFavorite, fetchFavoriteRecipes } from './FavoriteRecipesAPI';
 
 export const favoriteRecipesAdapter = createEntityAdapter<FavoriteRecipe>();
 
@@ -23,6 +23,16 @@ export const addRecipeToFavoriteAsync = createAsyncThunk(
   }
 )
 
+export const fetchFavoriteRecipesAsync = createAsyncThunk(
+  'favoriteRecipes/fetchFavoriteRecipes',
+  async () => {
+    const response = await fetchFavoriteRecipes();
+
+    return response;
+  }
+)
+
+
 export const favoriteRecipesSlice = createSlice({
   name: 'favoriteRecipes',
   initialState,
@@ -40,6 +50,15 @@ export const favoriteRecipesSlice = createSlice({
       favoriteRecipesAdapter.setAll(state.favoriteRecipes, action.payload);
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addRecipeToFavoriteAsync.fulfilled, (state, action) => {
+        favoriteRecipesAdapter.addOne(state.favoriteRecipes, action.payload.data);
+      })
+      .addCase(fetchFavoriteRecipesAsync.fulfilled, (state, action) => {
+        favoriteRecipesAdapter.setAll(state.favoriteRecipes, action.payload.data);
+      })
+  }
 });
 
 export const {
