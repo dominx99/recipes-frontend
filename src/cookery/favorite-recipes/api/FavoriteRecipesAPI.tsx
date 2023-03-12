@@ -8,7 +8,7 @@ export const addRecipeToFavorite = (recipe: Recipe) => {
     try {
       const favoriteRecipe: FavoriteRecipe = {
         id: uuidv4(),
-        recipeId: recipe.id,
+        recipe_id: recipe.id,
       };
 
       await axios().post('api/v1/favorite-recipes', favoriteRecipe);
@@ -16,6 +16,18 @@ export const addRecipeToFavorite = (recipe: Recipe) => {
       resolve({ data: favoriteRecipe });
     } catch (e: any) {
       reject('Could not add recipe to favorites');
+    }
+  })
+}
+
+export const removeRecipeFromFavorites = (favoriteRecipe: FavoriteRecipe) => {
+  return new Promise<{data: FavoriteRecipe}>(async (resolve, reject) => {
+    try {
+      await axios().delete('api/v1/favorite-recipes/' + favoriteRecipe.id);
+
+      resolve({ data: favoriteRecipe });
+    } catch (e) {
+      reject('Could not remove recipe from favorites');
     }
   })
 }
