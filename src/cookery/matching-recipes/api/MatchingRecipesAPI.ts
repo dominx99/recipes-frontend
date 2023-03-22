@@ -7,11 +7,11 @@ export interface PaginatedResponse<T> {
   next_page_url?: string,
 }
 
-interface FetchMatchingRecipesByIngredientsResponse extends PaginatedResponse<MatchingRecipe> {
+export interface FetchMatchingRecipesResponse extends PaginatedResponse<MatchingRecipe> {
 }
 
 export function fetchMatchingRecipesByIngredients(products: string[], next_page_url: string | null) {
-  return new Promise<{ data: FetchMatchingRecipesByIngredientsResponse }>(async (resolve) => {
+  return new Promise<{ data: FetchMatchingRecipesResponse }>(async (resolve) => {
     if (next_page_url) {
       const res = await axios().get(next_page_url);
 

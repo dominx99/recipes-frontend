@@ -1,18 +1,25 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
 import { RootState } from '../../../shared/app/store';
-import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
+import { MatchingRecipe, Recipe } from '../../matching-recipes/domain/MatchingRecipe';
 import FavoriteRecipe from '../domain/FavoriteRecipe';
 import { addRecipeToFavorite, fetchFavoriteRecipes, removeRecipeFromFavorites } from './FavoriteRecipesAPI';
+import { fetchAllMatchingFavoriteRecipes } from './MatchingFavoriteRecipesAPI';
 
 export const favoriteRecipesAdapter = createEntityAdapter<FavoriteRecipe>();
+export const favoriteMatchingRecipesAdapter = createEntityAdapter<MatchingRecipe>({
+  selectId: (matchingRecipe) => matchingRecipe.recipe.id,
+  sortComparer: (a, b) => a.recipe.name.localeCompare(b.recipe.name),
+});
 
 interface FavoriteRecipesState {
   favoriteRecipes: EntityState<FavoriteRecipe>;
+  matchingFavoriteRecipes: EntityState<MatchingRecipe>;
   processingRecipeIds: string[];
 }
 
 const initialState: FavoriteRecipesState = {
   favoriteRecipes: favoriteRecipesAdapter.getInitialState(),
+  matchingFavoriteRecipes: favoriteMatchingRecipesAdapter.getInitialState(),
   processingRecipeIds: [],
 }
 
@@ -31,6 +38,15 @@ export const fetchAllFavoriteRecipesAsync = createAsyncThunk(
     const response = await fetchFavoriteRecipes();
 
     return response;
+  }
+)
+
+export const fetchAllMatchingFavoriteRecipesAsync = createAsyncThunk(
+  'favoriteRecipes/fetchAllMatchingFavoriteRecipes',
+  async () => {
+    const response = await fetchAllMatchingFavoriteRecipes();
+
+    return response.data;
   }
 )
 
@@ -68,11 +84,18 @@ export const favoriteRecipesSlice = createSlice({
 
         state.processingRecipeIds = state.processingRecipeIds.filter((id) => id !== action.payload.data.recipe_id);
       })
+      .addCase(fetchAllMatchingFavoriteRecipesAsync.fulfilled, (state, action) => {
+        favoriteMatchingRecipesAdapter.setAll(state.matchingFavoriteRecipes, action.payload.data);
+      })
   }
 });
 
 export const favoriteRecipesSelectors = favoriteRecipesAdapter.getSelectors<RootState>(
   (state: RootState) => state.cookeryFavoriteRecipes.favoriteRecipes
+);
+
+export const matchingFavoriteRecipesSelectors = favoriteMatchingRecipesAdapter.getSelectors<RootState>(
+  (state: RootState) => state.cookeryFavoriteRecipes.matchingFavoriteRecipes
 );
 
 export const selectProcessingRecipeIds = (state: RootState) => state.cookeryFavoriteRecipes.processingRecipeIds;

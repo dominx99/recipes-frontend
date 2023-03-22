@@ -4,6 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link as RouterLink } from "react-router-dom";
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField } from '@mui/material';
 import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
@@ -11,7 +12,7 @@ import { BaseSyntheticEvent, useMemo } from 'react';
 import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
-import { FavoriteRounded } from '@mui/icons-material';
+import { FavoriteRounded, Home } from '@mui/icons-material';
 import { favoriteRecipesSelectors } from '../../cookery/favorite-recipes/api/FavoriteRecipesSlice';
 
 export default function Navbar() {
@@ -82,7 +83,12 @@ export default function Navbar() {
           />
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <IconButton size="medium" color="inherit" href="/favorite">
+            <IconButton component={RouterLink} size="medium" color="inherit" to="/">
+              <Home />
+            </IconButton>
+          </Box>
+          <Box>
+            <IconButton component={RouterLink} size="medium" color="inherit" to="/favorite">
               <Badge badgeContent={favoriteRecipesCount} color="error">
                 <FavoriteRounded />
               </Badge>

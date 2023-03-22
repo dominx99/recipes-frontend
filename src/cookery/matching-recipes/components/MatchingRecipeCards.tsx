@@ -1,34 +1,15 @@
 import { Grid, Typography } from "@mui/material";
-import { fetchMatchingMatchingRecipesByIngredientsAsync, matchingRecipeSelectors, nextMatchingRecipesUrlSelector, selectFetchMatchingRecipesLoading } from "../api/MatchingRecipesSlice";
 import MatchingRecipeCard from "./MatchingRecipeCard";
 import InfiniteScroll from "react-infinite-scroller";
-import { useCallback } from "react";
-import { Ingredient } from "../../ingredients/domain/Ingredient";
-import { selectAllIngredients } from "../../ingredients/api/IngredientsSlice";
-import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
+import { MatchingRecipe } from "../domain/MatchingRecipe";
 
 interface Props {
+  matchingRecipes: MatchingRecipe[];
+  loadMoreCallback: (page: number) => void,
+  nextPageUrl: string | null,
 }
 
-export default function MatchingRecipeCards(props: Props) {
-  const dispatch = useAppDispatch();
-  const { ...other } = props;
-  const matchingRecipes = useAppSelector(matchingRecipeSelectors.selectAll);
-  const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
-  const fetchMatchingRecipesLoading = useAppSelector(selectFetchMatchingRecipesLoading);
-  const nextPageUrl = useAppSelector(nextMatchingRecipesUrlSelector);
-
-  const loadMoreCallback = useCallback((page: number) => {
-    if (fetchMatchingRecipesLoading || !nextPageUrl) {
-      return;
-    }
-
-    dispatch(fetchMatchingMatchingRecipesByIngredientsAsync({
-      ingredients: ingredients.filter(ingredient => ingredient.selected).map(ingredient => ingredient.name),
-      next_page_url: nextPageUrl
-    }));
-  }, [dispatch, ingredients, fetchMatchingRecipesLoading, nextPageUrl]);
-
+export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback, nextPageUrl, ...other }: Props) {
   return (
     <InfiniteScroll
       pageStart={1}
