@@ -37,7 +37,7 @@ export const fetchAllFavoriteRecipesAsync = createAsyncThunk(
   async () => {
     const response = await fetchFavoriteRecipes();
 
-    return response;
+    return response.data;
   }
 )
 
@@ -74,7 +74,7 @@ export const favoriteRecipesSlice = createSlice({
         state.processingRecipeIds = state.processingRecipeIds.filter((id) => id !== action.payload.data.recipe_id);
       })
       .addCase(fetchAllFavoriteRecipesAsync.fulfilled, (state, action) => {
-        favoriteRecipesAdapter.setAll(state.favoriteRecipes, action.payload.data);
+        favoriteRecipesAdapter.setAll(state.favoriteRecipes, action.payload);
       })
       .addCase(removeRecipeFromFavoritesAsync.pending, (state, action) => {
         state.processingRecipeIds.push(action.meta.arg.recipe_id);

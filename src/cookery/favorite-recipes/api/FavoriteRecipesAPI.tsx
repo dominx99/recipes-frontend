@@ -36,7 +36,7 @@ export const removeRecipeFromFavorites = (favoriteRecipe: FavoriteRecipe) => {
   })
 }
 
-export const fetchFavoriteRecipes = () => {
+export function fetchFavoriteRecipes() {
   return new Promise<{data: FavoriteRecipe[]}>(async (resolve, reject) => {
     try {
       const res = await axios().get('api/v1/favorite-recipes');
