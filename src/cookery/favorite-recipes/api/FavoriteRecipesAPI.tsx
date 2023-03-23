@@ -15,6 +15,10 @@ export const addRecipeToFavorite = (recipe: Recipe) => {
 
       resolve({ data: favoriteRecipe });
     } catch (e: any) {
+      if (e.response && e.response.status === 401) {
+        window.location.href = '/login';
+      }
+
       reject('Could not add recipe to favorites');
     }
   })

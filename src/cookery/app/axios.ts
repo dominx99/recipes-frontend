@@ -14,12 +14,6 @@ const axiosCallback = () => {
   instance.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    if (error.response.status === 401 && window.location.pathname !== '/login') {
-      localStorage.removeItem('AUTHENTICATION_DETAILS');
-
-      window.location.href = '/login';
-    }
-
     return Promise.reject(error);
   });
 
