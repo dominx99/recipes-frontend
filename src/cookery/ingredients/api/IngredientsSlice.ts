@@ -3,7 +3,7 @@ import { RootState } from '../../../shared/app/store';
 import { CategoryResponse, fetchAllCategoriesWithIngredients } from '../../categories/api/CategoriesAPI';
 import { Category } from '../../categories/domain/Category';
 import { Ingredient } from '../domain/Ingredient';
-import { fetchAllIngredients } from './IngredientsAPI';
+import { fetchAllIngredients, fetchAllSelectedIngredientsFromSession } from './IngredientsAPI';
 
 export const ingredientsAdapter = createEntityAdapter<Ingredient>({
   selectId: (ingredient) => ingredient.id,
@@ -32,6 +32,17 @@ export const fetchAllCategoriesWithIngredientsAsync = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchAllSelectedIngredientsFromSessionAsync = createAsyncThunk(
+  'ingredients/fetchAllSelectedIngredientsFromSession',
+  async () => {
+    const response = await fetchAllSelectedIngredientsFromSession();
+
+    console.log(response.data);
+
+    return response.data;
+  }
+)
 
 const initialState = {
   ingredients: ingredientsAdapter.getInitialState(),
