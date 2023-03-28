@@ -9,7 +9,7 @@ export interface CategoryResponse {
 
 export function fetchAllCategoriesWithIngredients() {
   return new Promise<{ data: CategoryResponse[] }>(async (resolve) => {
-    const res = await axios().get('api/v1/categories-with-products')
+    const res = await axios().get('api/v1/categories-with-products');
 
     resolve(res);
   });

@@ -15,6 +15,9 @@ run:
 lint:
 	@docker-compose exec recipes_nodejs eslint --fix-dry-run src/
 
+bash:
+	@docker-compose exec recipes_nodejs bash
+
 git-pull:
 	git pull
 

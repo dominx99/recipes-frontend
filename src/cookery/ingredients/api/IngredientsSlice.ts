@@ -3,6 +3,7 @@ import { RootState } from '../../../shared/app/store';
 import { CategoryResponse, fetchAllCategoriesWithIngredients } from '../../categories/api/CategoriesAPI';
 import { Category } from '../../categories/domain/Category';
 import { Ingredient } from '../domain/Ingredient';
+import { getSelectedIngredients, removeSelectedIngredientId, saveSelectedIngredientId } from '../infrastructure/persistence/SelectedIngredientsRepository';
 import { fetchAllIngredients } from './IngredientsAPI';
 
 export const ingredientsAdapter = createEntityAdapter<Ingredient>({
@@ -63,12 +64,16 @@ export const ingredientsSlice = createSlice({
         id: payload.id,
         changes: { selected: true },
       });
+
+      saveSelectedIngredientId(payload.id);
     },
     deselectIngredient: (state, { payload }) => {
       ingredientsAdapter.updateOne(state.ingredients, {
         id: payload.id,
         changes: { selected: false },
       });
+
+      removeSelectedIngredientId(payload.id);
     },
     addCategory: (state, action) => {
       categoriesAdapter.addOne(state.categories, action.payload);
@@ -97,6 +102,13 @@ export const ingredientsSlice = createSlice({
 
       categoriesAdapter.setAll(state.categories, categories);
       ingredientsAdapter.setAll(state.ingredients, ingredients);
+
+      getSelectedIngredients().forEach((ingredientId: string) => {
+        ingredientsAdapter.updateOne(state.ingredients, {
+          id: ingredientId,
+          changes: { selected: true },
+        });
+      });
     });
   }
 });
