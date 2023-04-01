@@ -42,10 +42,6 @@ export default function Navbar() {
     if (reason.toString() === 'removeOption') {
       dispatch(deselectIngredient(details?.option));
     }
-
-    dispatch(fetchMatchingMatchingRecipesByIngredientsAsync({
-      ingredients: ingredients.map(ingredient => ingredient.name),
-    }));
   };
 
   const handleOpenSidebar = () => {
