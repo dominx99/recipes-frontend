@@ -12,31 +12,27 @@ import FavoriteRecipesPage from './cookery/favorite-recipes/pages/FavoriteRecipe
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <ThemeWrapper>
-        <Routes>
-          <Route path={CookeryRouteList.HOME} element={
-            <HomePage />
-          } />
+    <Routes>
+      <Route path={CookeryRouteList.HOME} element={
+        <HomePage />
+      } />
 
-          <Route path={CookeryRouteList.FAVROITE_RECIPES} element={
-            <FavoriteRecipesPage />
-          } />
+      <Route path={CookeryRouteList.FAVROITE_RECIPES} element={
+        <FavoriteRecipesPage />
+      } />
 
-          <Route path={AuthenticationRouteList.AUTHENTICATE} element={
-            <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
-              <LoginPage />
-            </RequireNonAuthentication>
-          } />
+      <Route path={AuthenticationRouteList.AUTHENTICATE} element={
+        <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
+          <LoginPage />
+        </RequireNonAuthentication>
+      } />
 
-          <Route path={AuthenticationRouteList.REGISTER} element={
-            <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
-              <RegisterPage />
-            </RequireNonAuthentication>
-          } />
-        </Routes>
-      </ThemeWrapper>
-    </ThemeProvider>
+      <Route path={AuthenticationRouteList.REGISTER} element={
+        <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
+          <RegisterPage />
+        </RequireNonAuthentication>
+      } />
+    </Routes>
   )
 }
 

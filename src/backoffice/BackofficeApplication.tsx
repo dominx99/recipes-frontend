@@ -16,17 +16,13 @@ function BackofficeApplication() {
   dispatch(setAuthenticationDetails(restoredDetails));
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <ThemeWrapper>
-        <Routes>
-          <Route path={CookeryRouteList.DASHBOARD} element={
-            <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
-              <DashboardPage />
-            </RequireAuthentication>
-          } />
-        </Routes>
-    </ThemeWrapper>
-    </ThemeProvider >
+    <Routes>
+      <Route path={CookeryRouteList.DASHBOARD} element={
+        <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
+          <DashboardPage />
+        </RequireAuthentication>
+      } />
+    </Routes>
   )
 }
 

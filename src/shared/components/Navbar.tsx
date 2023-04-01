@@ -9,7 +9,6 @@ import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Text
 import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent, useMemo } from 'react';
-import { fetchMatchingMatchingRecipesByIngredientsAsync } from '../../cookery/matching-recipes/api/MatchingRecipesSlice';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
 import { FavoriteRounded, Home } from '@mui/icons-material';

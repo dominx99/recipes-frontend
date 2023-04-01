@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import { FC } from 'react';
+import Theme from '../../../shared/components/Theme';
 import { ThemeWrapper } from '../../../shared/components/ThemeWrapper';
 import RegisterForm from '../components/RegisterForm';
 
@@ -7,7 +8,7 @@ interface Props {}
 
 const RegisterPage: FC<Props> = () => {
   return (
-    <ThemeWrapper>
+    <Theme>
       <Grid
         container
         direction="row"
@@ -17,7 +18,7 @@ const RegisterPage: FC<Props> = () => {
       >
         <RegisterForm />
       </Grid>
-    </ThemeWrapper>
+    </Theme>
   );
 };
 
