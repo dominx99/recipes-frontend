@@ -1,5 +1,5 @@
 export function getSelectedIngredients() {
-  const selectedIngredients = sessionStorage.getItem('cookery.ingredients.selected');
+  const selectedIngredients = localStorage.getItem('cookery.ingredients.selected');
   if (selectedIngredients) {
     return JSON.parse(selectedIngredients);
   }
@@ -14,11 +14,11 @@ export function saveSelectedIngredientId(id: string) {
   }
 
   const newSelectedIngredients = [...selectedIngredients, id];
-  sessionStorage.setItem('cookery.ingredients.selected', JSON.stringify(newSelectedIngredients));
+  localStorage.setItem('cookery.ingredients.selected', JSON.stringify(newSelectedIngredients));
 }
 
 export function removeSelectedIngredientId(id: string) {
   const selectedIngredients = getSelectedIngredients();
   const newSelectedIngredients = selectedIngredients.filter((ingredientId: string) => ingredientId !== id);
-  sessionStorage.setItem('cookery.ingredients.selected', JSON.stringify(newSelectedIngredients));
+  localStorage.setItem('cookery.ingredients.selected', JSON.stringify(newSelectedIngredients));
 }
