@@ -1,6 +1,3 @@
-import { darkTheme } from './shared/mui/themes';
-import { ThemeProvider } from "@mui/system";
-import { ThemeWrapper } from "./shared/components/ThemeWrapper";
 import { Route, Routes } from "react-router-dom";
 import HomePage from './cookery/shared/pages/HomePage';
 import CookeryRouteList from './cookery/app/router/CookeryRouteList';
@@ -9,6 +6,7 @@ import LoginPage from './security/authentication/pages/LoginPage';
 import RegisterPage from './security/authentication/pages/RegisterPage';
 import AuthenticationRouteList from './security/app/routes/AuthenticationRouteList';
 import FavoriteRecipesPage from './cookery/favorite-recipes/pages/FavoriteRecipesPage';
+import RequireAuthentication from './security/app/middleware/RequireAuthentication';
 
 function App() {
   return (
@@ -18,7 +16,9 @@ function App() {
       } />
 
       <Route path={CookeryRouteList.FAVROITE_RECIPES} element={
-        <FavoriteRecipesPage />
+        <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
+          <FavoriteRecipesPage />
+        </RequireAuthentication>
       } />
 
       <Route path={AuthenticationRouteList.AUTHENTICATE} element={
