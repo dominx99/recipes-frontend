@@ -5,7 +5,6 @@ import { fetchMatchingRecipesByIngredients } from './MatchingRecipesAPI';
 
 export const matchingRecipesAdapter = createEntityAdapter<MatchingRecipe>({
   selectId: (matchingRecipe) => matchingRecipe.recipe.id,
-  sortComparer: (a, b) => a.recipe.name.localeCompare(b.recipe.name),
 });
 
 interface FetchMatchingMatchingRecipesByIngredientsPayload {

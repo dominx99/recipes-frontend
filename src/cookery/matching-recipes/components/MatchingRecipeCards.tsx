@@ -18,7 +18,7 @@ export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback,
       loadMore={loadMoreCallback}
       useWindow={true}
       initialLoad={false}
-      threshold={300}
+      threshold={1000}
       useCapture={true}
     >
       <Grid container padding={2} {...other}>
