@@ -1,7 +1,8 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import MatchingRecipeCard from "./MatchingRecipeCard";
 import InfiniteScroll from "react-infinite-scroller";
 import { MatchingRecipe } from "../domain/MatchingRecipe";
+import LoadingSvg from "../../../shared/components/LoadingSvg";
 
 interface Props {
   matchingRecipes: MatchingRecipe[];
@@ -13,7 +14,11 @@ export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback,
   return (
     <InfiniteScroll
       pageStart={1}
-      loader={<Typography key={0} color={'white'}>Loading ...</Typography>}
+      loader={
+        <Grid key={1} display="flex" justifyContent={'center'} alignItems={'center'} width={'100%'}>
+          <LoadingSvg />
+        </Grid>
+      }
       hasMore={!!nextPageUrl}
       loadMore={loadMoreCallback}
       useWindow={true}
