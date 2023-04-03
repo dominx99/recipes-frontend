@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
+import EmptyBox from "../../../shared/components/EmptyBox";
 import { selectAllIngredients } from "../../ingredients/api/IngredientsSlice";
 import { Ingredient } from "../../ingredients/domain/Ingredient";
 import { fetchMatchingMatchingRecipesByIngredientsAsync, matchingRecipeSelectors, nextMatchingRecipesUrlSelector, selectFetchMatchingRecipesLoading } from "../api/MatchingRecipesSlice";
@@ -23,13 +24,20 @@ export default function MatchingRecipeByIngredientsCards() {
     }));
   }, [dispatch, ingredients, fetchMatchingRecipesLoading, nextPageUrl]);
 
-  return (
-    <>
-      <MatchingRecipeCards
-        matchingRecipes={matchingRecipes}
-        loadMoreCallback={loadMoreCallback}
-        nextPageUrl={nextPageUrl}
+  if (matchingRecipes.length <= 0) {
+    return (
+      <EmptyBox
+        height="75vh"
+        title={'No matching recipes found :('}
       />
-    </>
+    )
+  }
+
+  return (
+    <MatchingRecipeCards
+      matchingRecipes={matchingRecipes}
+      loadMoreCallback={loadMoreCallback}
+      nextPageUrl={nextPageUrl}
+    />
   )
 }

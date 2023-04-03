@@ -22,7 +22,7 @@ export const darkTheme = createTheme({
     neutral: {
       main: '#64748B',
       contrastText: grey[100],
-    }
+    },
   },
 })
 
