@@ -7,8 +7,15 @@ import RegisterPage from './security/authentication/pages/RegisterPage';
 import AuthenticationRouteList from './security/app/routes/AuthenticationRouteList';
 import FavoriteRecipesPage from './cookery/favorite-recipes/pages/FavoriteRecipesPage';
 import RequireAuthentication from './security/app/middleware/RequireAuthentication';
+import { useAppDispatch } from "./shared/app/hooks";
+import { setAuthenticationDetails } from "./security/authentication/api/AuthenticationSlice";
 
 function App() {
+  let dispatch = useAppDispatch();
+  let restoredDetails = localStorage.getItem('AUTHENTICATION_DETAILS');
+
+  dispatch(setAuthenticationDetails(restoredDetails));
+
   return (
     <Routes>
       <Route path={CookeryRouteList.HOME} element={
