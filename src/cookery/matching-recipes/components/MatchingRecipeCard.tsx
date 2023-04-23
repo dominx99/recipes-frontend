@@ -2,21 +2,22 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
+import LinearProgressWithLabel from "../../../shared/components/Progress/LinearProgressWithLabel";
 import { addRecipeToFavoriteAsync, favoriteRecipesSelectors, removeRecipeFromFavoritesAsync, selectProcessingRecipeIds } from "../../favorite-recipes/api/FavoriteRecipesSlice";
 import FavoriteRecipe from "../../favorite-recipes/domain/FavoriteRecipe";
 import RecipeCard from "../../recipes/components/RecipeCard";
-import { Recipe } from "../domain/MatchingRecipe";
+import { MatchingRecipe, Recipe } from "../domain/MatchingRecipe";
 
 interface MatchingRecipeCardProps {
-  recipe: Recipe;
+  matchingRecipe: MatchingRecipe;
 }
 
-export default function MatchingRecipeCard({ recipe }: MatchingRecipeCardProps) {
+export default function MatchingRecipeCard({ matchingRecipe }: MatchingRecipeCardProps) {
   const dispatch = useAppDispatch();
 
   const favoriteRecipes: FavoriteRecipe[] = useAppSelector(favoriteRecipesSelectors.selectAll);
   const processingFavoriteRecipeIds: string[] = useAppSelector(selectProcessingRecipeIds);
-  const recipeId = recipe.id;
+  const recipeId = matchingRecipe.recipe.id;
 
   const findFavoriteRecipe = (recipeId: string) => {
     return favoriteRecipes.find((favoriteRecipe) => favoriteRecipe.recipe_id === recipeId);
@@ -48,27 +49,30 @@ export default function MatchingRecipeCard({ recipe }: MatchingRecipeCardProps) 
     return favoriteRecipes.some((favoriteRecipe) => favoriteRecipe.recipe_id === recipeId);
   }, [favoriteRecipes, recipeId]);
 
+  const matchingPercentage = useMemo(() => {
+    return (matchingRecipe.matching_elements_count / matchingRecipe.recipe.components_count) * 100;
+  }, [matchingRecipe]);
+
   return (
     <RecipeCard
-      recipe={recipe}
+      recipe={matchingRecipe.recipe}
       action={
-        <IconButton
-          onClick={
-            isRecipeFavorite
+        <>
+          <IconButton
+            onClick={isRecipeFavorite
               ? handleRemoveFromFavorites()
-              : handleAddToFavorites(recipe)
-          }
-        >
-          {
-            isRecipeFavorite
+              : handleAddToFavorites(matchingRecipe.recipe)}
+          >
+            {isRecipeFavorite
               ? <Favorite
-                color="error"
-              />
+                color="error" />
               : <FavoriteBorder
-                color="error"
-              />
-          }
-        </IconButton>
+                color="error" />}
+          </IconButton>
+        </>
+      }
+      footer={
+        <LinearProgressWithLabel value={matchingPercentage} />
       }
     />
   );

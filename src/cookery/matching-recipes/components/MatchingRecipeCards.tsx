@@ -29,7 +29,7 @@ export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback,
       <Grid container padding={2} {...other}>
         {matchingRecipes.map((matchingRecipe) => (
           <Grid key={matchingRecipe.recipe.id} item xs={12} sm={6} md={4} padding={1}>
-            <MatchingRecipeCard recipe={matchingRecipe.recipe} />
+            <MatchingRecipeCard matchingRecipe={matchingRecipe} />
           </Grid>
         ))}
       </Grid>

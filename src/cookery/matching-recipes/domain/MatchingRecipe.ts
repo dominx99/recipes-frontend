@@ -4,9 +4,10 @@ export interface Recipe {
   id: string;
   name: string;
   components: RecipeComponent[];
+  components_count: number;
 }
 
 export interface MatchingRecipe {
   recipe: Recipe,
-  matching_ingredients_count: number,
+  matching_elements_count: number,
 }

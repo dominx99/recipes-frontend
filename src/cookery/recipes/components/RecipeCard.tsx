@@ -7,9 +7,10 @@ import { RecipeComponent } from "../../recipe-components/domain/RecipeComponent"
 interface RecipeCardProps {
   recipe: Recipe;
   action: ReactElement<any, any>;
+  footer?: ReactElement<any, any>;
 }
 
-export default function RecipeCard({ recipe, action }: RecipeCardProps) {
+export default function RecipeCard({ recipe, action, footer }: RecipeCardProps) {
   return (
     <Card>
       <CardHeader
@@ -43,6 +44,10 @@ export default function RecipeCard({ recipe, action }: RecipeCardProps) {
           ))}
         </List>
       </CardContent>
+      {
+        footer &&
+        <CardContent>{footer}</CardContent>
+      }
     </Card>
   );
 }
