@@ -9,13 +9,13 @@ export const matchingRecipesAdapter = createEntityAdapter<MatchingRecipe>({
 
 interface FetchMatchingMatchingRecipesByIngredientsPayload {
   ingredients: string[];
-  next_page_url?: string | null;
+  page: number;
 }
 
 export const fetchMatchingMatchingRecipesByIngredientsAsync = createAsyncThunk(
   'matchingRecipes/matchByIngredients',
-  async ({ ingredients, next_page_url }: FetchMatchingMatchingRecipesByIngredientsPayload) => {
-    const response = await fetchMatchingRecipesByIngredients(ingredients, next_page_url ? next_page_url : null);
+  async ({ ingredients, page }: FetchMatchingMatchingRecipesByIngredientsPayload) => {
+    const response = await fetchMatchingRecipesByIngredients(ingredients, page);
 
     return response.data;
   }
@@ -26,7 +26,8 @@ interface MatchingRecipesState {
   loading: {
     matchingRecipes: boolean,
   },
-  next_page_url: string | null;
+  page: number;
+  has_next_page: boolean;
 }
 
 const initialState: MatchingRecipesState = {
@@ -34,7 +35,8 @@ const initialState: MatchingRecipesState = {
   loading: {
     matchingRecipes: false,
   },
-  next_page_url: null,
+  page: 1,
+  has_next_page: false,
 }
 
 export const matchingRecipesSlice = createSlice({
@@ -61,13 +63,14 @@ export const matchingRecipesSlice = createSlice({
     builder.addCase(fetchMatchingMatchingRecipesByIngredientsAsync.fulfilled, (state, action) => {
       state.loading.matchingRecipes = false;
 
-      if (action.payload.is_first_page) {
+      if (action.payload.meta.page === 1) {
         matchingRecipesAdapter.setAll(state.matchingRecipes, action.payload.data);
       } else {
         matchingRecipesAdapter.addMany(state.matchingRecipes, action.payload.data);
       }
 
-      state.next_page_url = action.payload.next_page_url ? action.payload.next_page_url : null;
+      state.page = action.payload.meta.page;
+      state.has_next_page = action.payload.meta.has_next_page;
     });
   }
 });
@@ -84,6 +87,7 @@ export const {
 } = matchingRecipesSlice.actions;
 
 export const selectFetchMatchingRecipesLoading = (state: RootState) => state.matchingRecipes.loading.matchingRecipes;
-export const nextMatchingRecipesUrlSelector = (state: RootState) => state.matchingRecipes.next_page_url;
+export const matchingRecipesCurrentPageSelector = (state: RootState) => state.matchingRecipes.page;
+export const matchingRecipesHasNextPageSelector = (state: RootState) => state.matchingRecipes.has_next_page;
 
 export default matchingRecipesSlice.reducer;

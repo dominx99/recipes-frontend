@@ -7,19 +7,22 @@ import LoadingSvg from "../../../shared/components/LoadingSvg";
 interface Props {
   matchingRecipes: MatchingRecipe[];
   loadMoreCallback: (page: number) => void,
-  nextPageUrl: string | null,
+  isLoading?: boolean,
+  hasMore: boolean,
 }
 
-export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback, nextPageUrl, ...other }: Props) {
+export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback, isLoading, hasMore, ...other }: Props) {
   return (
     <InfiniteScroll
       pageStart={1}
       loader={
-        <Grid key={1} display="flex" justifyContent={'center'} alignItems={'center'} width={'100%'}>
-          <LoadingSvg />
-        </Grid>
+        isLoading
+          ? <Grid key={1} display="flex" justifyContent={'center'} alignItems={'center'} width={'100%'}>
+            <LoadingSvg />
+          </Grid>
+          : undefined
       }
-      hasMore={!!nextPageUrl}
+      hasMore={hasMore}
       loadMore={loadMoreCallback}
       useWindow={true}
       initialLoad={false}

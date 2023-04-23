@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import EmptyBox from "../../../shared/components/EmptyBox";
 import { selectAllIngredients } from "../../ingredients/api/IngredientsSlice";
 import { Ingredient } from "../../ingredients/domain/Ingredient";
-import { fetchMatchingMatchingRecipesByIngredientsAsync, matchingRecipeSelectors, nextMatchingRecipesUrlSelector, selectFetchMatchingRecipesLoading } from "../api/MatchingRecipesSlice";
+import { fetchMatchingMatchingRecipesByIngredientsAsync, matchingRecipesCurrentPageSelector, matchingRecipeSelectors, matchingRecipesHasNextPageSelector, selectFetchMatchingRecipesLoading } from "../api/MatchingRecipesSlice";
 import MatchingRecipeCards from "./MatchingRecipeCards";
 
 export default function MatchingRecipeByIngredientsCards() {
@@ -11,18 +11,19 @@ export default function MatchingRecipeByIngredientsCards() {
   const matchingRecipes = useAppSelector(matchingRecipeSelectors.selectAll);
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
   const fetchMatchingRecipesLoading = useAppSelector(selectFetchMatchingRecipesLoading);
-  const nextPageUrl = useAppSelector(nextMatchingRecipesUrlSelector);
+  const currentPage = useAppSelector(matchingRecipesCurrentPageSelector);
+  const hasNextPage = useAppSelector(matchingRecipesHasNextPageSelector);
 
-  const loadMoreCallback = useCallback((page: number) => {
-    if (fetchMatchingRecipesLoading || !nextPageUrl) {
+  const loadMoreCallback = useCallback(() => {
+    if (fetchMatchingRecipesLoading || !hasNextPage) {
       return;
     }
 
     dispatch(fetchMatchingMatchingRecipesByIngredientsAsync({
       ingredients: ingredients.filter(ingredient => ingredient.selected).map(ingredient => ingredient.name),
-      next_page_url: nextPageUrl
+      page: currentPage + 1,
     }));
-  }, [dispatch, ingredients, fetchMatchingRecipesLoading, nextPageUrl]);
+  }, [dispatch, ingredients, fetchMatchingRecipesLoading, currentPage, hasNextPage]);
 
   if (matchingRecipes.length <= 0) {
     return (
@@ -37,7 +38,8 @@ export default function MatchingRecipeByIngredientsCards() {
     <MatchingRecipeCards
       matchingRecipes={matchingRecipes}
       loadMoreCallback={loadMoreCallback}
-      nextPageUrl={nextPageUrl}
+      isLoading={fetchMatchingRecipesLoading}
+      hasMore={hasNextPage}
     />
   )
 }

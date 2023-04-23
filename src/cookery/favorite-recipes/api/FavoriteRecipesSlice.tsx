@@ -13,21 +13,23 @@ export const favoriteMatchingRecipesAdapter = createEntityAdapter<MatchingRecipe
 interface FavoriteRecipesState {
   favoriteRecipes: EntityState<FavoriteRecipe>;
   matchingFavoriteRecipes: EntityState<MatchingRecipe>;
-  nextPageMatchingFavoriteRecipesUrl: string | null;
   processingRecipeIds: string[];
   loading: {
     favoriteMatchingRecipes: boolean,
   },
+  page: number,
+  has_next_page: boolean,
 }
 
 const initialState: FavoriteRecipesState = {
   favoriteRecipes: favoriteRecipesAdapter.getInitialState(),
   matchingFavoriteRecipes: favoriteMatchingRecipesAdapter.getInitialState(),
-  nextPageMatchingFavoriteRecipesUrl: null,
   processingRecipeIds: [],
   loading: {
     favoriteMatchingRecipes: false,
   },
+  page: 1,
+  has_next_page: false,
 }
 
 export const addRecipeToFavoriteAsync = createAsyncThunk(
@@ -50,8 +52,8 @@ export const fetchAllFavoriteRecipesAsync = createAsyncThunk(
 
 export const fetchAllMatchingFavoriteRecipesAsync = createAsyncThunk(
   'favoriteRecipes/fetchAllMatchingFavoriteRecipes',
-  async (nextPageUrl?: string) => {
-    const response = await fetchAllMatchingFavoriteRecipes(nextPageUrl);
+  async (page: number) => {
+    const response = await fetchAllMatchingFavoriteRecipes(page);
 
     return response.data;
   }
@@ -95,15 +97,16 @@ export const favoriteRecipesSlice = createSlice({
         state.loading.favoriteMatchingRecipes = true;
       })
       .addCase(fetchAllMatchingFavoriteRecipesAsync.fulfilled, (state, action) => {
-        if (action.payload.is_first_page) {
+        state.loading.favoriteMatchingRecipes = false;
+
+        if (action.payload.meta.page === 1) {
           favoriteMatchingRecipesAdapter.setAll(state.matchingFavoriteRecipes, action.payload.data);
         } else {
           favoriteMatchingRecipesAdapter.addMany(state.matchingFavoriteRecipes, action.payload.data);
         }
 
-        state.nextPageMatchingFavoriteRecipesUrl = action.payload.next_page_url ? action.payload.next_page_url : null;
-
-        state.loading.favoriteMatchingRecipes = false;
+        state.page = action.payload.meta.page;
+        state.has_next_page = action.payload.meta.has_next_page;
       })
   }
 });
@@ -117,7 +120,8 @@ export const matchingFavoriteRecipesSelectors = favoriteMatchingRecipesAdapter.g
 );
 
 export const selectProcessingRecipeIds = (state: RootState) => state.cookeryFavoriteRecipes.processingRecipeIds;
-export const selectNextPageMatchingFavoriteRecipesUrl = (state: RootState) => state.cookeryFavoriteRecipes.nextPageMatchingFavoriteRecipesUrl;
 export const selectFavoriteMatchingRecipesLoading = (state: RootState) => state.cookeryFavoriteRecipes.loading.favoriteMatchingRecipes;
+export const favoriteMatchingRecipesPageSelector = (state: RootState) => state.cookeryFavoriteRecipes.page;
+export const favoriteMatchingRecipesHasNextPageSelector = (state: RootState) => state.cookeryFavoriteRecipes.has_next_page;
 
 export default favoriteRecipesSlice.reducer;

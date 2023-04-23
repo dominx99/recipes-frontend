@@ -13,7 +13,7 @@ export default function FavoriteRecipesPage() {
   useEffect(() => {
     dispatch(fetchAllCategoriesWithIngredientsAsync());
     dispatch(fetchAllFavoriteRecipesAsync());
-    dispatch(fetchAllMatchingFavoriteRecipesAsync());
+    dispatch(fetchAllMatchingFavoriteRecipesAsync(1));
   }, [dispatch]);
 
   return (

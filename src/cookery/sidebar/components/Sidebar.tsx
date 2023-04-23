@@ -25,6 +25,7 @@ export default function Sidebar() {
   useEffect(() => {
     dispatch(fetchMatchingMatchingRecipesByIngredientsAsync({
       ingredients: allIngredients.filter(ingredient => ingredient.selected).map(ingredient => ingredient.name),
+      page: 1
     }));
   }, [dispatch, allIngredients]);
 
