@@ -14,6 +14,10 @@ const axiosCallback = () => {
   instance.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
+    if (error.response.status === 401 && error.response.data.message === 'Expired JWT Token') {
+      localStorage.removeItem('AUTHENTICATION_DETAILS');
+    }
+
     return Promise.reject(error);
   });
 
