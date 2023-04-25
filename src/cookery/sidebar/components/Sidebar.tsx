@@ -1,5 +1,5 @@
 import { ChevronRight } from "@mui/icons-material";
-import { Chip, Grid, IconButton, List, ListItem, styled, SwipeableDrawer, Typography } from "@mui/material";
+import { Button, Chip, Grid, IconButton, List, ListItem, styled, SwipeableDrawer, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import { deselectIngredient, ingredientSelectors, selectAllCategories, selectIngredient } from "../../ingredients/api/IngredientsSlice";
@@ -41,6 +41,12 @@ export default function Sidebar() {
     }
   };
 
+  const clearIngredients = () => {
+    allIngredients.forEach(ingredient => {
+      dispatch(deselectIngredient(ingredient));
+    });
+  }
+
   const handleDrawerClose = () => {
     dispatch(toggleSidebar());
   }
@@ -56,6 +62,7 @@ export default function Sidebar() {
         <IconButton onClick={handleDrawerClose}>
           <ChevronRight />
         </IconButton>
+        <Button onClick={clearIngredients} variant="outlined" sx={{ marginLeft: 'auto' }}>Clear</Button>
       </DrawerHeader>
       {categories.map((category) => (
         <List sx={{ width: 300 }} key={category.id}>
