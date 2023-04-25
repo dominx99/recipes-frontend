@@ -9,9 +9,10 @@ interface Props {
   loadMoreCallback: (page: number) => void,
   isLoading?: boolean,
   hasMore: boolean,
+  progressBar: boolean,
 }
 
-export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback, isLoading, hasMore, ...other }: Props) {
+export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback, isLoading, hasMore, progressBar, ...other }: Props) {
   return (
     <InfiniteScroll
       pageStart={1}
@@ -32,7 +33,7 @@ export default function MatchingRecipeCards({ matchingRecipes, loadMoreCallback,
       <Grid container padding={2} {...other}>
         {matchingRecipes.map((matchingRecipe) => (
           <Grid key={matchingRecipe.recipe.id} item xs={12} sm={6} md={4} padding={1}>
-            <MatchingRecipeCard matchingRecipe={matchingRecipe} />
+            <MatchingRecipeCard matchingRecipe={matchingRecipe} progressBar={progressBar} />
           </Grid>
         ))}
       </Grid>

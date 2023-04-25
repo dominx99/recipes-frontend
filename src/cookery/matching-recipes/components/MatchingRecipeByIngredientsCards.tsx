@@ -40,6 +40,7 @@ export default function MatchingRecipeByIngredientsCards() {
       loadMoreCallback={loadMoreCallback}
       isLoading={fetchMatchingRecipesLoading}
       hasMore={hasNextPage}
+      progressBar={true}
     />
   )
 }

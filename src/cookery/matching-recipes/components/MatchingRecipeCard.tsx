@@ -10,9 +10,10 @@ import { MatchingRecipe, Recipe } from "../domain/MatchingRecipe";
 
 interface MatchingRecipeCardProps {
   matchingRecipe: MatchingRecipe;
+  progressBar: boolean;
 }
 
-export default function MatchingRecipeCard({ matchingRecipe }: MatchingRecipeCardProps) {
+export default function MatchingRecipeCard({ matchingRecipe, progressBar }: MatchingRecipeCardProps) {
   const dispatch = useAppDispatch();
 
   const favoriteRecipes: FavoriteRecipe[] = useAppSelector(favoriteRecipesSelectors.selectAll);
@@ -72,7 +73,9 @@ export default function MatchingRecipeCard({ matchingRecipe }: MatchingRecipeCar
         </>
       }
       footer={
-        <LinearProgressWithLabel value={matchingPercentage} />
+        progressBar
+        ? <LinearProgressWithLabel value={matchingPercentage} />
+        : undefined
       }
     />
   );

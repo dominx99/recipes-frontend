@@ -25,6 +25,7 @@ export default function FavoriteRecipeCards() {
       loadMoreCallback={loadMoreCallback}
       isLoading={fetchMatchingRecipesLoading}
       hasMore={hasNextPage}
+      progressBar={false}
     />
   )
 }
