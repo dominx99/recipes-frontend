@@ -1,6 +1,5 @@
 enum CookeryRouteList {
   HOME = '/',
-  DASHBOARD = '/dashboard',
   FAVROITE_RECIPES = '/favorite',
 }
 

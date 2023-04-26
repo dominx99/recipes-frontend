@@ -10,6 +10,7 @@ export interface AuthenticationCredentials {
 export type AuthenticationDetails = {
   token: string,
   refresh_token: string,
+  roles: string[],
 }
 
 export interface AuthenticationState {

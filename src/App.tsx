@@ -29,13 +29,13 @@ function App() {
       } />
 
       <Route path={AuthenticationRouteList.AUTHENTICATE} element={
-        <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
+        <RequireNonAuthentication>
           <LoginPage />
         </RequireNonAuthentication>
       } />
 
       <Route path={AuthenticationRouteList.REGISTER} element={
-        <RequireNonAuthentication redirectTo={CookeryRouteList.DASHBOARD}>
+        <RequireNonAuthentication>
           <RegisterPage />
         </RequireNonAuthentication>
       } />
