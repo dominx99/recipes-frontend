@@ -13,8 +13,9 @@ import { setAuthenticationDetails } from "./security/authentication/api/Authenti
 function App() {
   let dispatch = useAppDispatch();
   let restoredDetails = localStorage.getItem('AUTHENTICATION_DETAILS');
+  const parsedDetails = JSON.parse(restoredDetails ? restoredDetails : '{}');
 
-  dispatch(setAuthenticationDetails(restoredDetails));
+  dispatch(setAuthenticationDetails(parsedDetails));
 
   return (
     <Routes>
