@@ -11,7 +11,7 @@ import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent, useMemo } from 'react';
 import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
-import { AccountCircle, FavoriteRounded, Home, VerifiedUser } from '@mui/icons-material';
+import { AccountCircle, FavoriteRounded, Home } from '@mui/icons-material';
 import { favoriteRecipesSelectors } from '../../cookery/favorite-recipes/api/FavoriteRecipesSlice';
 
 export default function Navbar() {
