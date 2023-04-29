@@ -1,4 +1,5 @@
 import axios from "../../app/axios";
+import { PaginatedResponse } from "../../matching-recipes/api/MatchingRecipesAPI";
 import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
 
 export function addRecipe(recipe: Recipe) {
@@ -18,7 +19,7 @@ export function addRecipe(recipe: Recipe) {
 }
 
 export function fetchAllMyRecipes() {
-  return new Promise<{ data: Recipe[] }>(async (resolve, reject) => {
+  return new Promise<{ data: PaginatedResponse<Recipe> }>(async (resolve, reject) => {
     try {
       const response = await axios().get('api/v1/my-recipes');
 

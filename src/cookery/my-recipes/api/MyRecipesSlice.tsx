@@ -50,8 +50,17 @@ export const myRecipesSlice = createSlice({
       .addCase(fetchAllMyRecipesAsync.pending, (state) => {
         state.loading.fetchRecipes = true;
       })
-      .addCase(fetchAllMyRecipesAsync.fulfilled, (state) => {
+      .addCase(fetchAllMyRecipesAsync.fulfilled, (state, action) => {
         state.loading.fetchRecipes = false;
+
+        if (action.payload.meta.page === 1) {
+          myRecipesAdapter.setAll(state.recipes, action.payload.data);
+        } else {
+          myRecipesAdapter.addMany(state.recipes, action.payload.data);
+        }
+
+        state.page = action.payload.meta.page;
+        state.has_next_page = action.payload.meta.has_next_page;
       })
   }
 });
