@@ -78,6 +78,9 @@ export default function Navbar() {
           />
           <Box sx={{ flexGrow: 1 }} />
           <Box>
+            <IconButton component={RouterLink} size="medium" color="inherit" to="/my-recipes" />
+          </Box>
+          <Box>
             <IconButton component={RouterLink} size="medium" color="inherit" to="/">
               <Home />
             </IconButton>

@@ -6,6 +6,7 @@ import BackofficeLayoutSlice from "../../backoffice/shared/api/LayoutSlice";
 import AccountSlice from "../../security/account/api/AccountSlice";
 import AuthenticationSlice from "../../security/authentication/api/AuthenticationSlice";
 import FavoriteRecipesSlice from "../../cookery/favorite-recipes/api/FavoriteRecipesSlice";
+import MyRecipesSlice from "../../cookery/my-recipes/api/MyRecipesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     matchingRecipes: MatchingRecipesSlice,
     cookeryLayout: CookeryLayoutSlice,
     cookeryFavoriteRecipes: FavoriteRecipesSlice,
+    cookeryMyRecipes: MyRecipesSlice,
 
     backofficeLayout: BackofficeLayoutSlice,
   }

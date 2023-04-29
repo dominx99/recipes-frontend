@@ -9,6 +9,7 @@ import FavoriteRecipesPage from './cookery/favorite-recipes/pages/FavoriteRecipe
 import RequireAuthentication from './security/app/middleware/RequireAuthentication';
 import { useAppDispatch } from "./shared/app/hooks";
 import { setAuthenticationDetails } from "./security/authentication/api/AuthenticationSlice";
+import MyRecipesPage from "./cookery/my-recipes/pages/MyRecipesPage";
 
 function App() {
   let dispatch = useAppDispatch();
@@ -21,6 +22,12 @@ function App() {
     <Routes>
       <Route path={CookeryRouteList.HOME} element={
         <HomePage />
+      } />
+
+      <Route path={CookeryRouteList.MY_RECIPES} element={
+        <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
+          <MyRecipesPage />
+        </RequireAuthentication>
       } />
 
       <Route path={CookeryRouteList.FAVROITE_RECIPES} element={
