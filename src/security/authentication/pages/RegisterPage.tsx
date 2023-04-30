@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material';
 import { FC } from 'react';
 import Theme from '../../../shared/components/Theme';
-import { ThemeWrapper } from '../../../shared/components/ThemeWrapper';
 import RegisterForm from '../components/RegisterForm';
 
 interface Props {}

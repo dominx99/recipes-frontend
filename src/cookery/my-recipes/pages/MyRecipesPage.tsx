@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import Navbar from "../../../shared/components/Navbar";
 import Theme from "../../../shared/components/Theme";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/IngredientsSlice";
+import AddRecipeFloatingButton from "../../recipes/components/AddRecipeFloatingButton";
 import Sidebar from "../../sidebar/components/Sidebar";
 import { fetchAllMyRecipesAsync, myRecipesSelectors } from "../api/MyRecipesSlice";
 import MyRecipeCards from "../components/MyRecipeCards";
@@ -27,6 +28,7 @@ export default function FavoriteRecipesPage() {
         hasMore={true}
         isLoading={false}
       />
+      <AddRecipeFloatingButton />
     </Theme>
   )
 }
