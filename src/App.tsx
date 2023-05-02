@@ -10,6 +10,7 @@ import RequireAuthentication from './security/app/middleware/RequireAuthenticati
 import { useAppDispatch } from "./shared/app/hooks";
 import { setAuthenticationDetails } from "./security/authentication/api/AuthenticationSlice";
 import MyRecipesPage from "./cookery/my-recipes/pages/MyRecipesPage";
+import AddRecipePage from "./cookery/recipes/pages/AddRecipePage";
 
 function App() {
   let dispatch = useAppDispatch();
@@ -27,6 +28,12 @@ function App() {
       <Route path={CookeryRouteList.MY_RECIPES} element={
         <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
           <MyRecipesPage />
+        </RequireAuthentication>
+      } />
+
+      <Route path={CookeryRouteList.ADD_RECIPE} element={
+        <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
+          <AddRecipePage />
         </RequireAuthentication>
       } />
 
