@@ -1,13 +1,15 @@
 import axios from "../../app/axios";
 import { PaginatedResponse } from "../../matching-recipes/api/MatchingRecipesAPI";
 import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
+import { IRecipeForm } from "../../recipes/components/AddRecipeForm";
+import { AddedEntity } from "../../shared/api/APIUtils";
 
-export function addRecipe(recipe: Recipe) {
-  return new Promise<boolean>(async (resolve, reject) => {
+export function addRecipe(recipe: IRecipeForm) {
+  return new Promise<{data: AddedEntity}>(async (resolve, reject) => {
     try {
-      await axios().post('api/v1/my-recipes', recipe);
+      const res = await axios().post('api/v1/recipes', {...recipe});
 
-      resolve(true);
+      resolve(res);
     } catch (e: any) {
       if (e.response && e.response.status === 401) {
         window.location.href = '/login';

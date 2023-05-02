@@ -1,6 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
 import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
+import { IRecipeForm } from '../../recipes/components/AddRecipeForm';
 import { addRecipe, fetchAllMyRecipes } from './MyRecipesAPI';
 
 export const myRecipesAdapter = createEntityAdapter<Recipe>();
@@ -25,10 +26,10 @@ const initialState: MyRecipesState = {
 
 export const addRecipeAsync = createAsyncThunk(
   'myRecipes/addRecipe',
-  async (recipe: Recipe) => {
+  async (recipe: IRecipeForm) => {
     const response = await addRecipe(recipe);
 
-    return response;
+    return response.data;
   }
 )
 

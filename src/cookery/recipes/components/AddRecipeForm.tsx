@@ -2,24 +2,34 @@ import { Add, Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useAppSelector } from "../../../shared/app/hooks";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import { unitsSelector } from "../../measures/api/MeasuresSlice";
+import { addRecipeAsync } from "../../my-recipes/api/MyRecipesSlice";
 
-interface IAddRecipeForm {
+export interface IRecipeForm {
+  id: string | undefined,
   name: string;
-  components: {
-    name: string;
-    unit: string;
-    quantity: number;
-  }[];
+  components: IRecipeComponentForm[];
+}
+
+export interface IRecipeComponentForm {
+  id: string | undefined,
+  name: string;
+  unit: string;
+  quantity: number;
 }
 
 export default function AddRecipeForm() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const units = useAppSelector(unitsSelector);
 
-  const [form, setForm] = useState<IAddRecipeForm>({
+  const [form, setForm] = useState<IRecipeForm>({
+    id: undefined,
     name: '',
     components: [{
+      id: undefined,
       name: '',
       unit: '',
       quantity: 0,
@@ -48,8 +58,19 @@ export default function AddRecipeForm() {
     });
   }
 
-  const handleKeyPress = () => { };
-  const handleSubmit = () => { };
+  const handleSubmit = () => {
+    if (form.id !== undefined) {
+      // dispatch(updateRecipeAsync(form));
+
+      navigate('/my-recipes');
+
+      return;
+    }
+
+    dispatch(addRecipeAsync(form));
+
+    navigate('/my-recipes');
+  };
 
   const addComponentTemplate = () => {
     setForm({
@@ -57,6 +78,7 @@ export default function AddRecipeForm() {
       components: [
         ...form.components,
         {
+          id: undefined,
           name: '',
           unit: '',
           quantity: 0,
@@ -90,7 +112,6 @@ export default function AddRecipeForm() {
             <FormGroup>
               <TextField
                 onChange={handleChange}
-                onKeyPress={handleKeyPress}
                 name="name"
                 id="recipe-name"
                 label="Name"
@@ -108,7 +129,6 @@ export default function AddRecipeForm() {
                       <TextField
                         fullWidth
                         onChange={event => handleComponentChange(event, index)}
-                        onKeyPress={handleKeyPress}
                         name="name"
                         id="component-name"
                         label="Name"
@@ -137,7 +157,6 @@ export default function AddRecipeForm() {
                       <TextField
                         fullWidth
                         onChange={event => handleComponentChange(event, index)}
-                        onKeyPress={handleKeyPress}
                         name="quantity"
                         id="component-quantity"
                         label="Quantity"
