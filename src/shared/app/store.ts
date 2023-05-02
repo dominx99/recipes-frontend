@@ -7,6 +7,7 @@ import AccountSlice from "../../security/account/api/AccountSlice";
 import AuthenticationSlice from "../../security/authentication/api/AuthenticationSlice";
 import FavoriteRecipesSlice from "../../cookery/favorite-recipes/api/FavoriteRecipesSlice";
 import MyRecipesSlice from "../../cookery/my-recipes/api/MyRecipesSlice";
+import MeasuresSlice from "../../cookery/measures/api/MeasuresSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     cookeryLayout: CookeryLayoutSlice,
     cookeryFavoriteRecipes: FavoriteRecipesSlice,
     cookeryMyRecipes: MyRecipesSlice,
+    cookeryMeasures: MeasuresSlice,
 
     backofficeLayout: BackofficeLayoutSlice,
   }

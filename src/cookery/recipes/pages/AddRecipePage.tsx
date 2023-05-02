@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../../shared/app/hooks";
 import Navbar from "../../../shared/components/Navbar";
 import Theme from "../../../shared/components/Theme";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/IngredientsSlice";
+import { fetchAllUnitsAsync } from "../../measures/api/MeasuresSlice";
 import Sidebar from "../../sidebar/components/Sidebar";
 import AddRecipeForm from "../components/AddRecipeForm";
 
@@ -11,6 +12,7 @@ export default function AddRecipePage() {
 
   useEffect(() => {
     dispatch(fetchAllCategoriesWithIngredientsAsync());
+    dispatch(fetchAllUnitsAsync());
   }, [dispatch]);
 
   return (

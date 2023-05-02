@@ -2,6 +2,8 @@ import { Add, Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { useAppSelector } from "../../../shared/app/hooks";
+import { unitsSelector } from "../../measures/api/MeasuresSlice";
 
 interface IAddRecipeForm {
   name: string;
@@ -13,7 +15,7 @@ interface IAddRecipeForm {
 }
 
 export default function AddRecipeForm() {
-  const units = ['oz', 'none', 'a', 'dskja'];
+  const units = useAppSelector(unitsSelector);
 
   const [form, setForm] = useState<IAddRecipeForm>({
     name: '',
