@@ -35,8 +35,8 @@ export const addRecipeAsync = createAsyncThunk(
 
 export const fetchAllMyRecipesAsync = createAsyncThunk(
   'myRecipes/fetchAllMyRecipesAsync',
-  async () => {
-    const response = await fetchAllMyRecipes();
+  async (page: number) => {
+    const response = await fetchAllMyRecipes(page);
 
     return response.data;
   }
@@ -69,5 +69,9 @@ export const myRecipesSlice = createSlice({
 export const myRecipesSelectors = myRecipesAdapter.getSelectors<RootState>(
   (state: RootState) => state.cookeryMyRecipes.recipes
 );
+
+export const myRecipesLoadingSelector = (state: RootState) => state.cookeryMyRecipes.loading.fetchRecipes;
+export const myRecipesCurrentPageSelector = (state: RootState) => state.cookeryMyRecipes.page;
+export const myRecipesHasNextPageSelector = (state: RootState) => state.cookeryMyRecipes.has_next_page;
 
 export default myRecipesSlice.reducer;
