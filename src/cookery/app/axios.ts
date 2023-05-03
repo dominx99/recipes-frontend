@@ -1,4 +1,5 @@
 import axios from 'axios';
+import CookeryExcludedPathsFromAuth from './router/CookeryExcludedPathsFromAuth';
 
 const axiosCallback = () => {
   const details = localStorage.getItem('AUTHENTICATION_DETAILS');
@@ -16,6 +17,10 @@ const axiosCallback = () => {
   }, function (error) {
     if (error.response.status === 401 && error.response.data.message === 'Expired JWT Token') {
       localStorage.removeItem('AUTHENTICATION_DETAILS');
+    }
+
+    if (error.response.status === 401 && !CookeryExcludedPathsFromAuth.includes('/' + error.response.config.url)) {
+      window.location.href = '/login';
     }
 
     return Promise.reject(error);

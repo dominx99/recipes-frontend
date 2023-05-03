@@ -6,17 +6,9 @@ import { AddedEntity } from "../../shared/api/APIUtils";
 
 export function addRecipe(recipe: IRecipeForm) {
   return new Promise<{ data: AddedEntity }>(async (resolve, reject) => {
-    try {
-      const res = await axios().post('api/v1/recipes', { ...recipe });
+    const res = await axios().post('api/v1/recipes', { ...recipe });
 
-      resolve(res);
-    } catch (e: any) {
-      if (e.response && e.response.status === 401) {
-        window.location.href = '/login';
-      }
-
-      reject('Could not add recipe to favorites');
-    }
+    resolve(res);
   })
 }
 
