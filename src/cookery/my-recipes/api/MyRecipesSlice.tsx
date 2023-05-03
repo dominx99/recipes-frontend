@@ -13,6 +13,11 @@ interface MyRecipesState {
   },
   page: number,
   has_next_page: boolean,
+  errors: {
+    addRecipe: undefined | {
+      [key: string]: string,
+    }
+  }
 }
 
 const initialState: MyRecipesState = {
@@ -22,6 +27,9 @@ const initialState: MyRecipesState = {
   },
   page: 1,
   has_next_page: false,
+  errors: {
+    addRecipe: undefined,
+  }
 }
 
 export const addRecipeAsync = createAsyncThunk(
@@ -63,6 +71,13 @@ export const myRecipesSlice = createSlice({
         state.page = action.payload.meta.page;
         state.has_next_page = action.payload.meta.has_next_page;
       })
+      .addCase(addRecipeAsync.rejected, (state, action) => {
+        if (action.error.code === 'ERR_BAD_REQUEST' && typeof action.error.message === 'string') {
+          state.errors.addRecipe = JSON.parse(action.error.message);
+        }
+
+        throw new Error(action.error.code);
+      })
   }
 });
 
@@ -73,5 +88,6 @@ export const myRecipesSelectors = myRecipesAdapter.getSelectors<RootState>(
 export const myRecipesLoadingSelector = (state: RootState) => state.cookeryMyRecipes.loading.fetchRecipes;
 export const myRecipesCurrentPageSelector = (state: RootState) => state.cookeryMyRecipes.page;
 export const myRecipesHasNextPageSelector = (state: RootState) => state.cookeryMyRecipes.has_next_page;
+export const addRecipeErrorsSelector = (state: RootState) => state.cookeryMyRecipes.errors.addRecipe;
 
 export default myRecipesSlice.reducer;

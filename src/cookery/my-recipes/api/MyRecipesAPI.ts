@@ -6,9 +6,21 @@ import { AddedEntity } from "../../shared/api/APIUtils";
 
 export function addRecipe(recipe: IRecipeForm) {
   return new Promise<{ data: AddedEntity }>(async (resolve, reject) => {
-    const res = await axios().post('api/v1/recipes', { ...recipe });
+    try {
+      const res = await axios().post('api/v1/recipes', { ...recipe });
 
-    resolve(res);
+      resolve(res);
+    } catch (e: any) {
+      if (e.response.status === 400) {
+        reject({
+          message: JSON.stringify(e.response.data.errors),
+          code: 'ERR_BAD_REQUEST',
+        });
+
+        return;
+      }
+      reject(e)
+    }
   })
 }
 

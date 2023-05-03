@@ -1,11 +1,11 @@
 import { Add, Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import { unitsSelector } from "../../measures/api/MeasuresSlice";
-import { addRecipeAsync } from "../../my-recipes/api/MyRecipesSlice";
+import { addRecipeAsync, addRecipeErrorsSelector } from "../../my-recipes/api/MyRecipesSlice";
 
 export interface IRecipeForm {
   id: string | undefined,
@@ -24,6 +24,7 @@ export default function AddRecipeForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const units = useAppSelector(unitsSelector);
+  const errors = useAppSelector(addRecipeErrorsSelector);
 
   const [form, setForm] = useState<IRecipeForm>({
     id: undefined,
@@ -58,6 +59,22 @@ export default function AddRecipeForm() {
     });
   }
 
+  const hasErrorFor = (field: string): boolean => {
+    if (errors === undefined || errors[field] === undefined) {
+      return false;
+    }
+
+    return errors[field] !== undefined;
+  }
+
+  const getErrorFor = (field: string): string => {
+    if (errors === undefined || !hasErrorFor(field)) {
+      return ''
+    }
+
+    return errors[field];
+  }
+
   const handleSubmit = () => {
     if (form.id !== undefined) {
       // dispatch(updateRecipeAsync(form));
@@ -67,9 +84,8 @@ export default function AddRecipeForm() {
       return;
     }
 
-    dispatch(addRecipeAsync(form));
-
-    navigate('/my-recipes');
+    dispatch(addRecipeAsync(form))
+      .then(() => navigate('/my-recipes'))
   };
 
   const addComponentTemplate = () => {
@@ -117,6 +133,8 @@ export default function AddRecipeForm() {
                 label="Name"
                 variant="filled"
                 margin={"normal"}
+                error={hasErrorFor('name')}
+                helperText={getErrorFor('name')}
               />
 
               <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
@@ -134,23 +152,31 @@ export default function AddRecipeForm() {
                         label="Name"
                         variant="filled"
                         value={component.name}
+                        error={hasErrorFor(`components.${index}.name`)}
+                        helperText={getErrorFor(`components.${index}.name`)}
                       />
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <FormControl variant="filled" fullWidth>
-                        <InputLabel id="component-unit-label">Unit</InputLabel>
+                        <InputLabel error={hasErrorFor(`components.${index}.unit`)} id={`component-unit-${index}-label`}>Unit</InputLabel>
                         <Select
                           onChange={event => handleComponentChange(event, index)}
-                          labelId="component-unit-label"
+                          labelId={`component-unit-${index}-label`}
                           id="component-unit"
                           name="unit"
                           label="unit"
                           value={component.unit}
+                          error={hasErrorFor(`components.${index}.unit`)}
+                          aria-describedby={`component-unit-${index}-helper-text`}
                         >
                           {units.map((unit, index) => (
                             <MenuItem key={index} value={unit}>{unit}</MenuItem>
                           ))}
                         </Select>
+                        <FormHelperText
+                          id={`component-unit-${index}-helper-text`}
+                          error={hasErrorFor(`components.${index}.unit`)}
+                        >{getErrorFor(`components.${index}.unit`)}</FormHelperText>
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -162,6 +188,8 @@ export default function AddRecipeForm() {
                         label="Quantity"
                         variant="filled"
                         value={component.quantity}
+                        error={hasErrorFor(`components.${index}.quantity`)}
+                        helperText={getErrorFor(`components.${index}.quantity`)}
                       />
                     </Grid>
                   </Grid>
