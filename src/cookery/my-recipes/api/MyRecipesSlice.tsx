@@ -2,7 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from 
 import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
 import { IRecipeForm } from '../../recipes/components/AddRecipeForm';
-import { addRecipe, fetchAllMyRecipes } from './MyRecipesAPI';
+import { addRecipe, fetchAllMyRecipes, removeRecipe } from './MyRecipesAPI';
 
 export const myRecipesAdapter = createEntityAdapter<Recipe>();
 
@@ -36,6 +36,15 @@ export const addRecipeAsync = createAsyncThunk(
   'myRecipes/addRecipe',
   async (recipe: IRecipeForm) => {
     const response = await addRecipe(recipe);
+
+    return response.data;
+  }
+)
+
+export const removeRecipeAsync = createAsyncThunk(
+  'myRecipes/removeRecipe',
+  async (recipeId: string) => {
+    const response = await removeRecipe(recipeId);
 
     return response.data;
   }
@@ -77,6 +86,9 @@ export const myRecipesSlice = createSlice({
         }
 
         throw new Error(action.error.code);
+      })
+      .addCase(removeRecipeAsync.fulfilled, (state, action) => {
+        myRecipesAdapter.removeOne(state.recipes, action.payload.id);
       })
   }
 });

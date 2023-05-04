@@ -24,6 +24,18 @@ export function addRecipe(recipe: IRecipeForm) {
   })
 }
 
+export function removeRecipe(recipeId: string) {
+  return new Promise<{data: {id: string}}>(async (resolve, reject) => {
+    try {
+      await axios().delete(`api/v1/recipes/${recipeId}`);
+
+      resolve({ data: { id: recipeId } });
+    } catch (e: any) {
+      reject(e)
+    }
+  })
+}
+
 export function fetchAllMyRecipes(page: number) {
   return new Promise<{ data: PaginatedResponse<Recipe> }>(async (resolve, reject) => {
     try {
