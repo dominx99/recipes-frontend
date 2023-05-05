@@ -2,12 +2,13 @@ import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from 
 import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
 import { IRecipeForm } from '../../recipes/components/AddRecipeForm';
-import { addRecipe, fetchAllMyRecipes, removeRecipe } from './MyRecipesAPI';
+import { addRecipe, fetchAllMyRecipes, fetchRecipeById, removeRecipe, updateRecipe } from './MyRecipesAPI';
 
 export const myRecipesAdapter = createEntityAdapter<Recipe>();
 
 interface MyRecipesState {
   recipes: EntityState<Recipe>;
+  recipeToEdit?: Recipe;
   loading: {
     fetchRecipes: boolean,
   },
@@ -22,6 +23,7 @@ interface MyRecipesState {
 
 const initialState: MyRecipesState = {
   recipes: myRecipesAdapter.getInitialState(),
+  recipeToEdit: undefined,
   loading: {
     fetchRecipes: false,
   },
@@ -41,6 +43,15 @@ export const addRecipeAsync = createAsyncThunk(
   }
 )
 
+export const updateRecipeAsync = createAsyncThunk(
+  'myRecipes/addRecipe',
+  async (recipe: IRecipeForm) => {
+    const response = await updateRecipe(recipe);
+
+    return response;
+  }
+)
+
 export const removeRecipeAsync = createAsyncThunk(
   'myRecipes/removeRecipe',
   async (recipeId: string) => {
@@ -54,6 +65,15 @@ export const fetchAllMyRecipesAsync = createAsyncThunk(
   'myRecipes/fetchAllMyRecipesAsync',
   async (page: number) => {
     const response = await fetchAllMyRecipes(page);
+
+    return response.data;
+  }
+)
+
+export const fetchRecipeByIdAsync = createAsyncThunk(
+  'myRecipes/fetchRecipeByIdAsync',
+  async (recipeId: string) => {
+    const response = await fetchRecipeById(recipeId);
 
     return response.data;
   }
@@ -90,6 +110,9 @@ export const myRecipesSlice = createSlice({
       .addCase(removeRecipeAsync.fulfilled, (state, action) => {
         myRecipesAdapter.removeOne(state.recipes, action.payload.id);
       })
+      .addCase(fetchRecipeByIdAsync.fulfilled, (state, action) => {
+        state.recipeToEdit = action.payload;
+      })
   }
 });
 
@@ -101,5 +124,6 @@ export const myRecipesLoadingSelector = (state: RootState) => state.cookeryMyRec
 export const myRecipesCurrentPageSelector = (state: RootState) => state.cookeryMyRecipes.page;
 export const myRecipesHasNextPageSelector = (state: RootState) => state.cookeryMyRecipes.has_next_page;
 export const addRecipeErrorsSelector = (state: RootState) => state.cookeryMyRecipes.errors.addRecipe;
+export const recipeToEditSelector = (state: RootState) => state.cookeryMyRecipes.recipeToEdit;
 
 export default myRecipesSlice.reducer;

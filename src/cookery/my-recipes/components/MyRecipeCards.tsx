@@ -1,7 +1,8 @@
-import { Delete } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../shared/app/hooks";
 import ConfirmationDialog from "../../../shared/components/Confirmation/ConfirmationDialog";
 import LoadingSvg from "../../../shared/components/LoadingSvg";
@@ -18,6 +19,7 @@ interface Props {
 
 const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState(false);
 
   const handleDelete = (recipeId: string, confirmed: boolean) => {
@@ -46,7 +48,12 @@ const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
         open={deleteModalOpened}
         onClose={handleDelete}
       />
-
+      <IconButton
+        aria-label="edit"
+        onClick={() => navigate(`/edit-recipe/${recipe.id}`)}
+      >
+        <Edit color="primary" />
+      </IconButton>
       <IconButton
         aria-label="delete"
         onClick={() => setDeleteModalOpened(true)}

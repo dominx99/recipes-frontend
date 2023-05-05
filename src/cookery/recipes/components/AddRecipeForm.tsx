@@ -1,11 +1,12 @@
 import { Add, Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
+import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
 import { unitsSelector } from "../../measures/api/MeasuresSlice";
-import { addRecipeAsync, addRecipeErrorsSelector } from "../../my-recipes/api/MyRecipesSlice";
+import { addRecipeAsync, addRecipeErrorsSelector, updateRecipeAsync } from "../../my-recipes/api/MyRecipesSlice";
 
 export interface IRecipeForm {
   id: string | undefined,
@@ -20,13 +21,30 @@ export interface IRecipeComponentForm {
   quantity: number;
 }
 
-export default function AddRecipeForm() {
+interface Props {
+  recipe?: Recipe;
+}
+
+const convertRecipeToForm = (recipe: Recipe): IRecipeForm => {
+  return {
+    id: recipe.id,
+    name: recipe.name,
+    components: recipe.components.map(component => ({
+      id: component.id,
+      name: component.ingredient.name,
+      unit: component?.measure?.unit?.value || '',
+      quantity: component?.measure?.numeric_quantity || 0,
+    })),
+  }
+}
+
+export default function AddRecipeForm({ recipe }: Props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const units = useAppSelector(unitsSelector);
   const errors = useAppSelector(addRecipeErrorsSelector);
 
-  const [form, setForm] = useState<IRecipeForm>({
+  const defaultState = {
     id: undefined,
     name: '',
     components: [{
@@ -35,7 +53,17 @@ export default function AddRecipeForm() {
       unit: '',
       quantity: 0,
     }],
-  });
+  }
+
+  const [form, setForm] = useState<IRecipeForm>(defaultState);
+
+  useEffect(() => {
+    if (recipe === undefined) {
+      return;
+    }
+
+    setForm(convertRecipeToForm(recipe));
+  }, [recipe])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -77,9 +105,8 @@ export default function AddRecipeForm() {
 
   const handleSubmit = () => {
     if (form.id !== undefined) {
-      // dispatch(updateRecipeAsync(form));
-
-      navigate('/my-recipes');
+      dispatch(updateRecipeAsync(form))
+        .then(() => navigate('/my-recipes'))
 
       return;
     }
@@ -135,70 +162,75 @@ export default function AddRecipeForm() {
                 margin={"normal"}
                 error={hasErrorFor('name')}
                 helperText={getErrorFor('name')}
+                value={form.name}
               />
 
               <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
               <Typography>Components</Typography>
 
               {form.components.map((component, index) => (
-                <Stack mt={2} key={index} direction="row" justifyContent="center" alignItems="center">
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={4}>
-                      <TextField
-                        fullWidth
-                        onChange={event => handleComponentChange(event, index)}
-                        name="name"
-                        id="component-name"
-                        label="Name"
-                        variant="filled"
-                        value={component.name}
-                        error={hasErrorFor(`components.${index}.name`)}
-                        helperText={getErrorFor(`components.${index}.name`)}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <FormControl variant="filled" fullWidth>
-                        <InputLabel error={hasErrorFor(`components.${index}.unit`)} id={`component-unit-${index}-label`}>Unit</InputLabel>
-                        <Select
+                <Fragment key={index}>
+                  <Stack mt={2} direction="row" justifyContent="center" alignItems="center">
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={4}>
+                        <TextField
+                          fullWidth
                           onChange={event => handleComponentChange(event, index)}
-                          labelId={`component-unit-${index}-label`}
-                          id="component-unit"
-                          name="unit"
-                          label="unit"
-                          value={component.unit}
-                          error={hasErrorFor(`components.${index}.unit`)}
-                          aria-describedby={`component-unit-${index}-helper-text`}
-                        >
-                          {units.map((unit, index) => (
-                            <MenuItem key={index} value={unit}>{unit}</MenuItem>
-                          ))}
-                        </Select>
-                        <FormHelperText
-                          id={`component-unit-${index}-helper-text`}
-                          error={hasErrorFor(`components.${index}.unit`)}
-                        >{getErrorFor(`components.${index}.unit`)}</FormHelperText>
-                      </FormControl>
+                          name="name"
+                          id="component-name"
+                          label="Name"
+                          variant="filled"
+                          value={component.name}
+                          error={hasErrorFor(`components.${index}.name`)}
+                          helperText={getErrorFor(`components.${index}.name`)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={4}>
+                        <FormControl variant="filled" fullWidth>
+                          <InputLabel error={hasErrorFor(`components.${index}.unit`)} id={`component-unit-${index}-label`}>Unit</InputLabel>
+                          <Select
+                            onChange={event => handleComponentChange(event, index)}
+                            labelId={`component-unit-${index}-label`}
+                            id="component-unit"
+                            name="unit"
+                            label="unit"
+                            value={component.unit}
+                            error={hasErrorFor(`components.${index}.unit`)}
+                            aria-describedby={`component-unit-${index}-helper-text`}
+                            defaultValue={component.unit}
+                          >
+                            {units.map((unit, index) => (
+                              <MenuItem key={index} value={unit}>{unit}</MenuItem>
+                            ))}
+                          </Select>
+                          <FormHelperText
+                            id={`component-unit-${index}-helper-text`}
+                            error={hasErrorFor(`components.${index}.unit`)}
+                          >{getErrorFor(`components.${index}.unit`)}</FormHelperText>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={4}>
+                        <TextField
+                          fullWidth
+                          onChange={event => handleComponentChange(event, index)}
+                          name="quantity"
+                          id="component-quantity"
+                          label="Quantity"
+                          variant="filled"
+                          value={component.quantity}
+                          error={hasErrorFor(`components.${index}.quantity`)}
+                          helperText={getErrorFor(`components.${index}.quantity`)}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                      <TextField
-                        fullWidth
-                        onChange={event => handleComponentChange(event, index)}
-                        name="quantity"
-                        id="component-quantity"
-                        label="Quantity"
-                        variant="filled"
-                        value={component.quantity}
-                        error={hasErrorFor(`components.${index}.quantity`)}
-                        helperText={getErrorFor(`components.${index}.quantity`)}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Box>
-                    <IconButton color="error" onClick={() => removeComponentTemplate(index)}>
-                      <Close />
-                    </IconButton>
-                  </Box>
-                </Stack>
+                    <Box>
+                      <IconButton color="error" onClick={() => removeComponentTemplate(index)}>
+                        <Close />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                  {(index !== form.components.length - 1) && <Divider sx={{ marginTop: 3, marginBottom: 1 }} />}
+                </Fragment>
               ))}
             </FormGroup>
             <Stack mt={2}>

@@ -11,6 +11,7 @@ import { useAppDispatch } from "./shared/app/hooks";
 import { setAuthenticationDetails } from "./security/authentication/api/AuthenticationSlice";
 import MyRecipesPage from "./cookery/my-recipes/pages/MyRecipesPage";
 import AddRecipePage from "./cookery/recipes/pages/AddRecipePage";
+import EditRecipePage from "./cookery/recipes/pages/EditRecipePage";
 
 function App() {
   let dispatch = useAppDispatch();
@@ -34,6 +35,12 @@ function App() {
       <Route path={CookeryRouteList.ADD_RECIPE} element={
         <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
           <AddRecipePage />
+        </RequireAuthentication>
+      } />
+
+      <Route path={CookeryRouteList.EDIT_RECIPE} element={
+        <RequireAuthentication redirectTo={AuthenticationRouteList.AUTHENTICATE}>
+          <EditRecipePage />
         </RequireAuthentication>
       } />
 
