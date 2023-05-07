@@ -4,6 +4,7 @@ import Navbar from "../../../shared/components/Navbar";
 import Theme from "../../../shared/components/Theme";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/IngredientsSlice";
 import { fetchAllUnitsAsync } from "../../measures/api/MeasuresSlice";
+import MenuSidebar from "../../sidebar/components/MenuSidebar";
 import Sidebar from "../../sidebar/components/Sidebar";
 import AddRecipeForm from "../components/AddRecipeForm";
 
@@ -18,6 +19,7 @@ export default function AddRecipePage() {
   return (
     <Theme>
       <Navbar />
+      <MenuSidebar />
       <Sidebar />
       <AddRecipeForm />
     </Theme>

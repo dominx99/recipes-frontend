@@ -4,15 +4,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link as RouterLink } from "react-router-dom";
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField } from '@mui/material';
 import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
-import { BaseSyntheticEvent, useMemo } from 'react';
-import { toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
+import { BaseSyntheticEvent } from 'react';
+import { toggleMenuSidebar, toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
-import { AccountCircle, FavoriteRounded, Home } from '@mui/icons-material';
-import { favoriteRecipesSelectors } from '../../cookery/favorite-recipes/api/FavoriteRecipesSlice';
+import { ShoppingCart } from '@mui/icons-material';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
@@ -21,12 +19,6 @@ export default function Navbar() {
   const selectedIngredientsCount = useAppSelector(selectAllIngredients)
     .filter(ingredient => ingredient.selected)
     .length;
-
-  const favoriteRecipes = useAppSelector(favoriteRecipesSelectors.selectAll)
-
-  const favoriteRecipesCount: number = useMemo(() => {
-    return favoriteRecipes.length
-  }, [favoriteRecipes])
 
   const onIngredientsChange = (
     event: BaseSyntheticEvent,
@@ -47,10 +39,19 @@ export default function Navbar() {
     dispatch(toggleSidebar());
   }
 
+  const handleOpenMenuSidebar = () => {
+    dispatch(toggleMenuSidebar());
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <Box>
+            <IconButton onClick={handleOpenMenuSidebar} size="medium" color="inherit">
+              <MenuIcon />
+            </IconButton>
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Autocomplete
             multiple
@@ -78,26 +79,9 @@ export default function Navbar() {
           />
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <IconButton component={RouterLink} size="medium" color="inherit" to="/my-recipes">
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box>
-            <IconButton component={RouterLink} size="medium" color="inherit" to="/">
-              <Home />
-            </IconButton>
-          </Box>
-          <Box>
-            <IconButton component={RouterLink} size="medium" color="inherit" to="/favorite">
-              <Badge badgeContent={favoriteRecipesCount} color="error">
-                <FavoriteRounded />
-              </Badge>
-            </IconButton>
-          </Box>
-          <Box>
             <IconButton size="medium" color="inherit" onClick={handleOpenSidebar}>
               <Badge badgeContent={selectedIngredientsCount} color="primary">
-                <MenuIcon />
+                <ShoppingCart />
               </Badge>
             </IconButton>
           </Box>

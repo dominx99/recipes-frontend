@@ -6,6 +6,7 @@ import Theme from "../../../shared/components/Theme";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/IngredientsSlice";
 import { fetchAllUnitsAsync } from "../../measures/api/MeasuresSlice";
 import { fetchRecipeByIdAsync, recipeToEditSelector } from "../../my-recipes/api/MyRecipesSlice";
+import MenuSidebar from "../../sidebar/components/MenuSidebar";
 import Sidebar from "../../sidebar/components/Sidebar";
 import AddRecipeForm from "../components/AddRecipeForm";
 
@@ -30,6 +31,7 @@ export default function EditRecipePage() {
   return (
     <Theme>
       <Navbar />
+      <MenuSidebar />
       <Sidebar />
       <AddRecipeForm recipe={recipe} />
     </Theme>

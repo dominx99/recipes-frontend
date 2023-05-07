@@ -5,6 +5,7 @@ import Theme from "../../../shared/components/Theme";
 import { fetchAllFavoriteRecipesAsync } from "../../favorite-recipes/api/FavoriteRecipesSlice";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/IngredientsSlice";
 import MatchingRecipeByIngredientsCards from "../../matching-recipes/components/MatchingRecipeByIngredientsCards";
+import MenuSidebar from "../../sidebar/components/MenuSidebar";
 import Sidebar from "../../sidebar/components/Sidebar";
 
 export default function HomePage() {
@@ -18,6 +19,7 @@ export default function HomePage() {
   return (
     <Theme>
       <Navbar />
+      <MenuSidebar />
       <Sidebar />
       <MatchingRecipeByIngredientsCards />
     </Theme>
