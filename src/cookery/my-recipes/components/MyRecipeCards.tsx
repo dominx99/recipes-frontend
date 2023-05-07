@@ -1,4 +1,4 @@
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Publish } from "@mui/icons-material";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
@@ -8,7 +8,7 @@ import ConfirmationDialog from "../../../shared/components/Confirmation/Confirma
 import LoadingSvg from "../../../shared/components/LoadingSvg";
 import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
 import RecipeCard from "../../recipes/components/RecipeCard";
-import { removeRecipeAsync } from "../api/MyRecipesSlice";
+import { publishRecipeAsync, removeRecipeAsync } from "../api/MyRecipesSlice";
 
 interface Props {
   recipes: Recipe[];
@@ -21,6 +21,7 @@ const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState(false);
+  const [publishConfirmationOpened, setPublishConfirmationOpened] = useState(false);
 
   const handleDelete = (recipeId: string, confirmed: boolean) => {
     setDeleteModalOpened(false);
@@ -30,6 +31,12 @@ const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
     }
 
     dispatch(removeRecipeAsync(recipeId));
+  }
+
+  const handlePublish = () => {
+    setPublishConfirmationOpened(false);
+
+    dispatch(publishRecipeAsync(recipe.id));
   }
 
   return (
@@ -48,6 +55,26 @@ const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
         open={deleteModalOpened}
         onClose={handleDelete}
       />
+      <ConfirmationDialog
+        title={
+          <Typography variant="inherit">
+            Publish&nbsp;
+            <Typography variant="inherit" component="span" color="secondary">{recipe.name}</Typography>
+          </Typography>
+        }
+        body={
+          <Typography>Are you sure you want to publish this recipe to all users?</Typography>
+        }
+        value={recipe.id}
+        open={publishConfirmationOpened}
+        onClose={handlePublish}
+      />
+      <IconButton
+        aria-label="publish"
+        onClick={() => setPublishConfirmationOpened(true)}
+      >
+        <Publish color="secondary" />
+      </IconButton>
       <IconButton
         aria-label="edit"
         onClick={() => navigate(`/edit-recipe/${recipe.id}`)}

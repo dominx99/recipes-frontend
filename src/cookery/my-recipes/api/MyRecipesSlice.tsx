@@ -2,7 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from 
 import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
 import { IRecipeForm } from '../../recipes/components/AddRecipeForm';
-import { addRecipe, fetchAllMyRecipes, fetchRecipeById, removeRecipe, updateRecipe } from './MyRecipesAPI';
+import { addRecipe, fetchAllMyRecipes, fetchRecipeById, publishRecipe, removeRecipe, updateRecipe } from './MyRecipesAPI';
 
 export const myRecipesAdapter = createEntityAdapter<Recipe>();
 
@@ -58,6 +58,13 @@ export const removeRecipeAsync = createAsyncThunk(
     const response = await removeRecipe(recipeId);
 
     return response.data;
+  }
+)
+
+export const publishRecipeAsync = createAsyncThunk(
+  'myRecipes/publishRecipe',
+  async (recipeId: string) => {
+    await publishRecipe(recipeId);
   }
 )
 

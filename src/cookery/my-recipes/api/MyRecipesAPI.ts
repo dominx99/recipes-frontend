@@ -93,3 +93,15 @@ export function fetchRecipeById(recipeId: string) {
     }
   })
 }
+
+export function publishRecipe(recipeId: string) {
+  return new Promise<{ data: Recipe }>(async (resolve, reject) => {
+    try {
+      const response = await axios().post(`api/v1/recipes/${recipeId}/publish`);
+
+      resolve(response);
+    } catch (e: any) {
+      reject('Could not publish recipe');
+    }
+  });
+}
