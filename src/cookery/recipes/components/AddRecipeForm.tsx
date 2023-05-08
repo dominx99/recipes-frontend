@@ -112,7 +112,7 @@ export default function AddRecipeForm({ recipe }: Props) {
     }
 
     dispatch(addRecipeAsync(form))
-      .then(() => navigate('/my-recipes'))
+      .then(res => res.meta.requestStatus !== 'rejected' && navigate('/my-recipes'))
   };
 
   const addComponentTemplate = () => {

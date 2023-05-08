@@ -111,8 +111,6 @@ export const myRecipesSlice = createSlice({
         if (action.error.code === 'ERR_BAD_REQUEST' && typeof action.error.message === 'string') {
           state.errors.addRecipe = JSON.parse(action.error.message);
         }
-
-        throw new Error(action.error.code);
       })
       .addCase(removeRecipeAsync.fulfilled, (state, action) => {
         myRecipesAdapter.removeOne(state.recipes, action.payload.id);
