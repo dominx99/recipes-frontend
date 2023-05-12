@@ -5,6 +5,7 @@ export interface Recipe {
   name: string;
   components: RecipeComponent[];
   components_count: number;
+  published: boolean;
 }
 
 export interface MatchingRecipe {

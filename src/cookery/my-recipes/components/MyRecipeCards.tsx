@@ -1,5 +1,5 @@
 import { Delete, Edit, Publish } from "@mui/icons-material";
-import { Grid, IconButton, Typography } from "@mui/material";
+import { Chip, Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,10 @@ interface Props {
   isLoading?: boolean,
   hasMore: boolean,
 }
+
+const PublishedChip = () => (
+  <Chip label="published" color="secondary" />
+)
 
 const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
   const dispatch = useAppDispatch();
@@ -69,12 +73,15 @@ const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
         open={publishConfirmationOpened}
         onClose={handlePublish}
       />
-      <IconButton
-        aria-label="publish"
-        onClick={() => setPublishConfirmationOpened(true)}
-      >
-        <Publish color="secondary" />
-      </IconButton>
+
+      {!recipe.published && (
+        <IconButton
+          aria-label="publish"
+          onClick={() => setPublishConfirmationOpened(true)}
+        >
+          <Publish color="secondary" />
+        </IconButton>
+      )}
       <IconButton
         aria-label="edit"
         onClick={() => navigate(`/edit-recipe/${recipe.id}`)}
@@ -112,7 +119,11 @@ export default function MyRecipeCards({ recipes, loadMoreCallback, isLoading, ha
       <Grid container padding={2} {...other}>
         {recipes.map(recipe => (
           <Grid key={recipe.id} item xs={12} sm={6} md={4} padding={1}>
-            <RecipeCard recipe={recipe} action={<MyRecipeActions recipe={recipe} />} />
+            <RecipeCard
+              recipe={recipe}
+              action={<MyRecipeActions recipe={recipe} />}
+              footer={recipe.published ? <PublishedChip /> : undefined}
+            />
           </Grid>
         ))}
       </Grid>
