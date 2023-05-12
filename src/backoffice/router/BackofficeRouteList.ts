@@ -1,5 +1,5 @@
 enum BackofficeRouteList {
-  DASHBOARD = '/dashboard',
+  PUBLISH_RECIPES_REQUESTS = '/publish-recipes-requests',
 }
 
 export default BackofficeRouteList;

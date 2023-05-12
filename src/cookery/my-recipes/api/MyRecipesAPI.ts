@@ -105,3 +105,19 @@ export function publishRecipe(recipeId: string) {
     }
   });
 }
+
+export function fetchRecipesByIds(recipeIds: string[]) {
+  return new Promise<{ data: PaginatedResponse<Recipe> }>(async (resolve, reject) => {
+    try {
+      const response = await axios().get(`api/v1/recipes/by-ids`, {
+        params: {
+          ids: recipeIds,
+        },
+      });
+
+      resolve(response);
+    } catch (e: any) {
+      reject('Could not fetch recipes');
+    }
+  })
+}

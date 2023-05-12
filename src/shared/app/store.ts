@@ -8,6 +8,7 @@ import AuthenticationSlice from "../../security/authentication/api/Authenticatio
 import FavoriteRecipesSlice from "../../cookery/favorite-recipes/api/FavoriteRecipesSlice";
 import MyRecipesSlice from "../../cookery/my-recipes/api/MyRecipesSlice";
 import MeasuresSlice from "../../cookery/measures/api/MeasuresSlice";
+import BackofficePublishRecipeRequestsSlice from "../../backoffice/publish-requests/recipes/api/PublishRecipeRequestsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     cookeryMeasures: MeasuresSlice,
 
     backofficeLayout: BackofficeLayoutSlice,
+    backofficePublishRecipeRequests: BackofficePublishRecipeRequestsSlice,
   }
 });
 

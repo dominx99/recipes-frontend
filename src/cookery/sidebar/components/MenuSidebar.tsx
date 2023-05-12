@@ -1,8 +1,10 @@
-import { ChevronLeft, FavoriteRounded, Receipt, Search } from "@mui/icons-material";
+import { ChevronLeft, FavoriteRounded, Publish, Receipt, Search } from "@mui/icons-material";
 import { Badge, Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, SwipeableDrawer } from "@mui/material";
 import { useMemo } from "react";
 import { Link as RouteLink } from "react-router-dom";
+import BackofficeRouteList from "../../../backoffice/router/BackofficeRouteList";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
+import CookeryRouteList from "../../app/router/CookeryRouteList";
 import { favoriteRecipesSelectors } from "../../favorite-recipes/api/FavoriteRecipesSlice";
 import { isMenuSidebarOpen, toggleMenuSidebar } from "../../shared/slice/LayoutSlice";
 
@@ -43,14 +45,14 @@ export default function MenuSidebar() {
         </DrawerHeader>
         <List>
           <ListItem disablePadding>
-            <ListItemButton component={RouteLink} to="/" color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
+            <ListItemButton component={RouteLink} to={CookeryRouteList.HOME} color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
               <ListItemIcon><Search /></ListItemIcon>
               <ListItemText primary="Search recipes" />
             </ListItemButton>
           </ListItem>
 
           <ListItem disablePadding>
-            <ListItemButton component={RouteLink} to="/favorite" color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
+            <ListItemButton component={RouteLink} to={CookeryRouteList.FAVROITE_RECIPES} color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
               <ListItemIcon>
                 <Badge badgeContent={favoriteRecipesCount} color="error">
                   <FavoriteRounded />
@@ -61,11 +63,19 @@ export default function MenuSidebar() {
           </ListItem>
 
           <ListItem disablePadding>
-            <ListItemButton component={RouteLink} to="/my-recipes" color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
+            <ListItemButton component={RouteLink} to={CookeryRouteList.MY_RECIPES} color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
               <ListItemIcon><Receipt /></ListItemIcon>
               <ListItemText primary="My recipes" />
             </ListItemButton>
           </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton component={RouteLink} to={BackofficeRouteList.PUBLISH_RECIPES_REQUESTS} color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
+              <ListItemIcon><Publish /></ListItemIcon>
+              <ListItemText primary="Publish requests" />
+            </ListItemButton>
+          </ListItem>
+
         </List>
       </Box>
     </SwipeableDrawer>
