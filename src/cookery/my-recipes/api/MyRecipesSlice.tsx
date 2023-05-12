@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
 import { RootState } from '../../../shared/app/store';
 import { Recipe } from '../../matching-recipes/domain/MatchingRecipe';
-import { IRecipeForm } from '../../recipes/components/AddRecipeForm';
+import { IRecipeForm } from '../../recipes/components/RecipeForm';
 import { addRecipe, fetchAllMyRecipes, fetchRecipeById, publishRecipe, removeRecipe, updateRecipe } from './MyRecipesAPI';
 
 export const myRecipesAdapter = createEntityAdapter<Recipe>();

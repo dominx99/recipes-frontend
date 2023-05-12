@@ -38,7 +38,7 @@ const convertRecipeToForm = (recipe: Recipe): IRecipeForm => {
   }
 }
 
-export default function AddRecipeForm({ recipe }: Props) {
+export default function RecipeForm({ recipe }: Props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const units = useAppSelector(unitsSelector);
@@ -149,7 +149,7 @@ export default function AddRecipeForm({ recipe }: Props) {
       <Grid item xs={12} md={8}>
         <Card>
           <CardHeader
-            title={<Typography variant="h4" variantMapping={{ h4: 'h1' }}>Add recipe</Typography>}
+            title={<Typography variant="h4" variantMapping={{ h4: 'h1' }}>{form.id !== undefined ? 'Update' : 'Add'} recipe</Typography>}
           />
           <CardContent>
             <FormGroup>
@@ -250,7 +250,7 @@ export default function AddRecipeForm({ recipe }: Props) {
                 onClick={handleSubmit}
                 loading={false}
               >
-                Add recipe
+                Save recipe
               </LoadingButton>
             </Stack>
           </CardContent>

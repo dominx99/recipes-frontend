@@ -8,7 +8,7 @@ import { fetchAllUnitsAsync } from "../../measures/api/MeasuresSlice";
 import { fetchRecipeByIdAsync, recipeToEditSelector } from "../../my-recipes/api/MyRecipesSlice";
 import MenuSidebar from "../../sidebar/components/MenuSidebar";
 import Sidebar from "../../sidebar/components/Sidebar";
-import AddRecipeForm from "../components/AddRecipeForm";
+import RecipeForm from "../components/RecipeForm";
 
 export default function EditRecipePage() {
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ export default function EditRecipePage() {
       <Navbar />
       <MenuSidebar />
       <Sidebar />
-      <AddRecipeForm recipe={recipe} />
+      <RecipeForm recipe={recipe} />
     </Theme>
   )
 }

@@ -6,7 +6,7 @@ import { fetchAllCategoriesWithIngredientsAsync } from "../../ingredients/api/In
 import { fetchAllUnitsAsync } from "../../measures/api/MeasuresSlice";
 import MenuSidebar from "../../sidebar/components/MenuSidebar";
 import Sidebar from "../../sidebar/components/Sidebar";
-import AddRecipeForm from "../components/AddRecipeForm";
+import RecipeForm from "../components/RecipeForm";
 
 export default function AddRecipePage() {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export default function AddRecipePage() {
       <Navbar />
       <MenuSidebar />
       <Sidebar />
-      <AddRecipeForm />
+      <RecipeForm />
     </Theme>
   )
 }

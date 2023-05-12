@@ -1,7 +1,7 @@
 import axios from "../../app/axios";
 import { PaginatedResponse } from "../../matching-recipes/api/MatchingRecipesAPI";
 import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
-import { IRecipeForm } from "../../recipes/components/AddRecipeForm";
+import { IRecipeForm } from "../../recipes/components/RecipeForm";
 import { AddedEntity } from "../../shared/api/APIUtils";
 
 export function addRecipe(recipe: IRecipeForm) {
