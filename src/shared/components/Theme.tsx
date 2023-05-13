@@ -14,10 +14,6 @@ interface Props {
 export default function Theme({ children }: Props) {
   const currentMode = useAppSelector(getMode);
 
-  useEffect(() => {
-    console.log('mode', currentMode);
-  }, [currentMode]);
-
   const theme = useMemo(
     () => currentMode === 'light' ? lightTheme : darkTheme,
     [currentMode],
