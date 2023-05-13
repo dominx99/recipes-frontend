@@ -1,4 +1,4 @@
-import { ChevronLeft, FavoriteRounded, Logout, Publish, Receipt, Search } from "@mui/icons-material";
+import { Brightness4, Brightness7, ChevronLeft, FavoriteRounded, Logout, Publish, Receipt, Search } from "@mui/icons-material";
 import { Badge, Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, SwipeableDrawer } from "@mui/material";
 import { useMemo } from "react";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { authenticationDetails, setAuthenticationDetails } from "../../../securi
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import CookeryRouteList from "../../app/router/CookeryRouteList";
 import { favoriteRecipesSelectors } from "../../favorite-recipes/api/FavoriteRecipesSlice";
-import { isMenuSidebarOpen, toggleMenuSidebar } from "../../shared/slice/LayoutSlice";
+import { getMode, isMenuSidebarOpen, toggleMenuSidebar, toggleMode } from "../../shared/slice/LayoutSlice";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -23,6 +23,7 @@ export default function MenuSidebar() {
   const isOpen = useAppSelector(isMenuSidebarOpen);
   const details = useAppSelector(authenticationDetails);
   const navigate = useNavigate();
+  const mode = useAppSelector(getMode);
 
   const handleDrawerClose = () => {
     dispatch(toggleMenuSidebar());
@@ -43,10 +44,17 @@ export default function MenuSidebar() {
   }
 
   const handleLogout = () => {
+    dispatch(toggleMenuSidebar());
+
     localStorage.removeItem('AUTHENTICATION_DETAILS');
     dispatch(setAuthenticationDetails(null));
 
     navigate(AuthenticationRouteList.AUTHENTICATE);
+  }
+
+  const handleChangeMode = () => {
+    dispatch(toggleMenuSidebar());
+    dispatch(toggleMode());
   }
 
   return (
@@ -98,6 +106,13 @@ export default function MenuSidebar() {
               </ListItemButton>
             </ListItem>
           )}
+
+          <ListItem disablePadding>
+            <ListItemButton color="inherit" onClick={handleChangeMode}>
+              <ListItemIcon>{mode === 'light' ? <Brightness4 /> : <Brightness7 />}</ListItemIcon>
+              <ListItemText primary={(mode === 'light' ? 'Dark' : 'Light') + ' mode'}/>
+            </ListItemButton>
+          </ListItem>
 
           {isAuthenticated() && (
             <ListItem disablePadding>

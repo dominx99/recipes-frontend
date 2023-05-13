@@ -26,6 +26,32 @@ export const darkTheme = createTheme({
   },
 })
 
+export const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+    text: {
+      primary: grey[800],
+      secondary: grey[800],
+      disabled: grey[800],
+    },
+    primary: {
+      light: indigo[500],
+      main: indigo[500],
+      dark: indigo[800],
+      contrastText: grey[200],
+    },
+    error: {
+      main: red[300],
+      light: red[300],
+      contrastText: grey[200],
+    },
+    neutral: {
+      main: '#64748B',
+      contrastText: grey[100],
+    },
+  },
+})
+
 declare module '@mui/material/styles' {
   interface Palette {
     neutral: Palette['primary'];

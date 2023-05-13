@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../shared/app/store";
 
 interface LayoutState {
+  mode: 'light' | 'dark';
   sidebar: {
     open: boolean;
   },
@@ -11,6 +12,7 @@ interface LayoutState {
 }
 
 const initialState: LayoutState = {
+  mode: 'light',
   sidebar: {
     open: false,
   },
@@ -28,6 +30,9 @@ export const layoutSlice = createSlice({
     },
     toggleMenuSidebar: (state) => {
       state.menuSidebar.open = !state.menuSidebar.open;
+    },
+    toggleMode: (state) => {
+      state.mode = state.mode === 'light' ? 'dark' : 'light';
     }
   },
 });
@@ -35,9 +40,11 @@ export const layoutSlice = createSlice({
 export const {
   toggleSidebar,
   toggleMenuSidebar,
+  toggleMode,
 } = layoutSlice.actions;
 
 export const isSidebarOpen = (state: RootState) => state.cookeryLayout.sidebar.open;
 export const isMenuSidebarOpen = (state: RootState) => state.cookeryLayout.menuSidebar.open;
+export const getMode = (state: RootState) => state.cookeryLayout.mode;
 
 export default layoutSlice.reducer;

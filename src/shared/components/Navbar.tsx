@@ -4,13 +4,14 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField } from '@mui/material';
-import {  deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
+import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField, ThemeProvider } from '@mui/material';
+import { deselectIngredient, selectAllIngredients, selectIngredient } from '../../cookery/ingredients/api/IngredientsSlice';
 import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent } from 'react';
 import { toggleMenuSidebar, toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
-import { ShoppingCart } from '@mui/icons-material';
+import { DarkMode, ShoppingCart } from '@mui/icons-material';
+import { darkTheme } from '../mui/themes';
 
 export default function Navbar() {
   const ingredients: Ingredient[] = useAppSelector(selectAllIngredients);
@@ -62,7 +63,9 @@ export default function Navbar() {
             isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={onIngredientsChange}
             renderInput={(params) => (
-              <TextField variant='outlined' {...params} label='Ingredients' />
+              <ThemeProvider theme={darkTheme}>
+                <TextField variant='outlined' {...params} label='Ingredients' />
+              </ThemeProvider>
             )}
             renderOption={(props, option) => {
               return (
