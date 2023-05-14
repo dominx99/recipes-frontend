@@ -10,7 +10,7 @@ import { Ingredient } from '../../cookery/ingredients/domain/Ingredient';
 import { BaseSyntheticEvent } from 'react';
 import { toggleMenuSidebar, toggleSidebar } from '../../cookery/shared/slice/LayoutSlice';
 import { useAppDispatch, useAppSelector } from '../../shared/app/hooks';
-import { DarkMode, ShoppingCart } from '@mui/icons-material';
+import { ShoppingCart } from '@mui/icons-material';
 import { darkTheme } from '../mui/themes';
 
 export default function Navbar() {

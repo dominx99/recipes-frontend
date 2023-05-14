@@ -1,7 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
-import { createTheme, IconButton } from "@mui/material";
-import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useMemo } from "react";
 import { getMode } from "../../cookery/shared/slice/LayoutSlice";
 import { useAppSelector } from "../app/hooks";
 import { darkTheme, lightTheme } from "../mui/themes";

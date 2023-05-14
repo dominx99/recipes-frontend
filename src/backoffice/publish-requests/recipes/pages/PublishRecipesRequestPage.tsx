@@ -1,10 +1,8 @@
-import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { fetchAllCategoriesWithIngredientsAsync } from "../../../../cookery/ingredients/api/IngredientsSlice";
 import MenuSidebar from "../../../../cookery/sidebar/components/MenuSidebar";
 import Sidebar from "../../../../cookery/sidebar/components/Sidebar";
 import { useAppDispatch, useAppSelector } from "../../../../shared/app/hooks";
-import EmptyBox from "../../../../shared/components/EmptyBox";
 import Navbar from "../../../../shared/components/Navbar";
 import Theme from "../../../../shared/components/Theme";
 import { fetchAllRequestedRecipesAsync, requestedRecipesHasNextPageSelector, requestedRecipesPageSelector, requestedRecipesSelectors, selectRequestedRecipesLoading } from "../api/PublishRecipeRequestsSlice";

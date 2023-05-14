@@ -1,12 +1,12 @@
 import { SearchOff } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { ReactElement } from "react";
 
 interface Props {
   title: ReactElement<any, any>,
   subtitle?: ReactElement<any, any>,
   height: string,
-  emptyIconDisplayed: boolean,
+  emptyIconDisplayed?: boolean,
 }
 
 export default function EmptyBox({ title, subtitle, height, emptyIconDisplayed = true }: Props) {
