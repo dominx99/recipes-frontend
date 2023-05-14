@@ -1,6 +1,6 @@
 import { Add, Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextareaAutosize, TextField, Typography } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
@@ -11,6 +11,7 @@ import { addRecipeAsync, addRecipeErrorsSelector, updateRecipeAsync } from "../.
 export interface IRecipeForm {
   id: string | undefined,
   name: string;
+  instructions: string,
   components: IRecipeComponentForm[];
 }
 
@@ -29,6 +30,7 @@ const convertRecipeToForm = (recipe: Recipe): IRecipeForm => {
   return {
     id: recipe.id,
     name: recipe.name,
+    instructions: recipe.instructions ?? '',
     components: recipe.components.map(component => ({
       id: component.id,
       name: component.ingredient.name,
@@ -47,6 +49,7 @@ export default function RecipeForm({ recipe }: Props) {
   const defaultState = {
     id: undefined,
     name: '',
+    instructions: '',
     components: [{
       id: undefined,
       name: '',
@@ -106,7 +109,7 @@ export default function RecipeForm({ recipe }: Props) {
   const handleSubmit = () => {
     if (form.id !== undefined) {
       dispatch(updateRecipeAsync(form))
-        .then(() => navigate('/my-recipes'))
+        .then(res => res.meta.requestStatus !== 'rejected' && navigate('/my-recipes'))
 
       return;
     }
@@ -232,12 +235,27 @@ export default function RecipeForm({ recipe }: Props) {
                   {(index !== form.components.length - 1) && <Divider sx={{ marginTop: 3, marginBottom: 1 }} />}
                 </Fragment>
               ))}
+
+              <Stack mt={2}>
+                <Button color="secondary" onClick={addComponentTemplate}>
+                  <Add />
+                </Button>
+              </Stack>
+
+              <TextField
+                onChange={handleChange}
+                name="instructions"
+                id="recipe-instructions"
+                label="Instructions"
+                variant="filled"
+                margin={"normal"}
+                error={hasErrorFor('instructions')}
+                helperText={getErrorFor('instructions')}
+                value={form.instructions}
+                multiline
+                minRows={3}
+              />
             </FormGroup>
-            <Stack mt={2}>
-              <Button color="secondary" onClick={addComponentTemplate}>
-                <Add />
-              </Button>
-            </Stack>
 
             <Stack
               direction="row"

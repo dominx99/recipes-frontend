@@ -33,6 +33,7 @@ export function updateRecipe(recipe: IRecipeForm) {
 
       const res = await axios().put(`api/v1/recipes/${recipe.id}`, {
         name: recipe.name,
+        instructions: recipe.instructions,
         components: recipe.components.map(c => ({
           name: c.name,
           quantity: c.quantity,

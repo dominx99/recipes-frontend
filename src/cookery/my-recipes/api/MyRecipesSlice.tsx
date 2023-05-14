@@ -89,7 +89,11 @@ export const fetchRecipeByIdAsync = createAsyncThunk(
 export const myRecipesSlice = createSlice({
   name: 'myRecipes',
   initialState,
-  reducers: {},
+  reducers: {
+    resetAddRecipeErrors: (state) => {
+      state.errors.addRecipe = undefined;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllMyRecipesAsync.pending, (state) => {
@@ -130,5 +134,7 @@ export const myRecipesCurrentPageSelector = (state: RootState) => state.cookeryM
 export const myRecipesHasNextPageSelector = (state: RootState) => state.cookeryMyRecipes.has_next_page;
 export const addRecipeErrorsSelector = (state: RootState) => state.cookeryMyRecipes.errors.addRecipe;
 export const recipeToEditSelector = (state: RootState) => state.cookeryMyRecipes.recipeToEdit;
+
+export const { resetAddRecipeErrors } = myRecipesSlice.actions;
 
 export default myRecipesSlice.reducer;
