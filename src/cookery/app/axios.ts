@@ -1,5 +1,6 @@
 import axios from 'axios';
-import CookeryExcludedPathsFromAuth from './router/CookeryExcludedPathsFromAuth';
+import { each } from 'immer/dist/internal';
+import CookeryExcludedPathsFromAuth, { ExcludedPath } from './router/CookeryExcludedPathsFromAuth';
 
 const axiosCallback = () => {
   const details = localStorage.getItem('AUTHENTICATION_DETAILS');
@@ -12,14 +13,26 @@ const axiosCallback = () => {
     },
   });
 
-  instance.interceptors.response.use(function (response) {
+  instance.interceptors.response.use(function(response) {
     return response;
-  }, function (error) {
+  }, function(error) {
     if (error.response.status === 401 && error.response.data.message === 'Expired JWT Token') {
       localStorage.removeItem('AUTHENTICATION_DETAILS');
     }
 
-    if (error.response.status === 401 && !CookeryExcludedPathsFromAuth.includes('/' + error.response.config.url)) {
+    if (error.response.status === 401) {
+      const matchingExcludedPaths = CookeryExcludedPathsFromAuth.filter((path: ExcludedPath) => {
+        if (path.path === ('/' + error.response.config.url) && path.method === error.response.config.method) {
+          return true;
+        }
+
+        return false;
+      });
+
+      if (matchingExcludedPaths.length > 0) {
+        return;
+      }
+
       window.location.href = '/login';
     }
 

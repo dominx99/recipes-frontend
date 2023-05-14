@@ -1,8 +1,9 @@
-import { Card, CardContent, CardHeader, Grid, List, ListItem, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, Grid, List, ListItem, Typography } from "@mui/material";
 import { ReactElement } from "react";
 import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
 import Measure from "../../measures/components/Measure";
 import { RecipeComponent } from "../../recipe-components/domain/RecipeComponent";
+import TruncatedText from "../../shared/components/TruncatedText";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -43,6 +44,11 @@ export default function RecipeCard({ recipe, action, footer }: RecipeCardProps) 
             </ListItem>
           ))}
         </List>
+        <Divider sx={{ marginBottom: 2, marginTop: 1 }} />
+        <Typography variant="body1" sx={{ fontWeight: 'bold' }} mb={1}>Instructions:</Typography>
+        {recipe.instructions && (
+          <Typography><TruncatedText length={150}>{recipe.instructions}</TruncatedText></Typography>
+        )}
       </CardContent>
       {
         footer &&
