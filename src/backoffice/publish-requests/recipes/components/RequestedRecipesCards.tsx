@@ -6,6 +6,7 @@ import { Recipe } from "../../../../cookery/matching-recipes/domain/MatchingReci
 import RecipeCard from "../../../../cookery/recipes/components/RecipeCard";
 import { useAppDispatch } from "../../../../shared/app/hooks";
 import ConfirmationDialog from "../../../../shared/components/Confirmation/ConfirmationDialog";
+import EmptyBox from "../../../../shared/components/EmptyBox";
 import LoadingSvg from "../../../../shared/components/LoadingSvg";
 import { acceptRecipeRequestAsync, rejectRecipeRequestAsync } from "../api/PublishRecipeRequestsSlice";
 
@@ -88,6 +89,17 @@ const RecipeActions = ({ recipe }: { recipe: Recipe }) => {
 }
 
 export default function RequestedRecipesCards({ recipes, loadMoreCallback, isLoading, hasMore, ...other }: Props) {
+  if (recipes.length <= 0) {
+    return (
+      <EmptyBox
+        height="75vh"
+        title={
+          <Typography variant="h3" component="h1" mb={8}>There is no recipe requests</Typography>
+        }
+      />
+    )
+  }
+
   return (
     <InfiniteScroll
       pageStart={1}

@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/app/hooks";
 import EmptyBox from "../../../shared/components/EmptyBox";
@@ -29,7 +30,9 @@ export default function MatchingRecipeByIngredientsCards() {
     return (
       <EmptyBox
         height="75vh"
-        title={'No matching recipes found :('}
+        title={
+          <Typography variant="h3" component="h1" mb={8}>No mathcing recipes found :(</Typography>
+        }
       />
     )
   }

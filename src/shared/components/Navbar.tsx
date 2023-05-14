@@ -83,7 +83,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             <IconButton size="medium" color="inherit" onClick={handleOpenSidebar}>
-              <Badge badgeContent={selectedIngredientsCount} color="primary">
+              <Badge badgeContent={selectedIngredientsCount} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>

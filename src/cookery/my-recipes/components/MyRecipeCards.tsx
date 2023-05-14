@@ -1,11 +1,13 @@
-import { Delete, Edit, Publish } from "@mui/icons-material";
-import { Chip, Grid, IconButton, Typography } from "@mui/material";
+import { Add, Delete, Edit, Publish } from "@mui/icons-material";
+import { Box, Button, Chip, Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../shared/app/hooks";
 import ConfirmationDialog from "../../../shared/components/Confirmation/ConfirmationDialog";
+import EmptyBox from "../../../shared/components/EmptyBox";
 import LoadingSvg from "../../../shared/components/LoadingSvg";
+import CookeryRouteList from "../../app/router/CookeryRouteList";
 import { Recipe } from "../../matching-recipes/domain/MatchingRecipe";
 import RecipeCard from "../../recipes/components/RecipeCard";
 import { publishRecipeAsync, removeRecipeAsync } from "../api/MyRecipesSlice";
@@ -99,6 +101,24 @@ const MyRecipeActions = ({ recipe }: { recipe: Recipe }) => {
 }
 
 export default function MyRecipeCards({ recipes, loadMoreCallback, isLoading, hasMore, ...other }: Props) {
+  if (recipes.length <= 0) {
+    return (
+      <EmptyBox
+        height="75vh"
+        title={
+          <Typography variant="h3" component="h1" mb={4}>You didn't create any recipe yet</Typography>
+        }
+        subtitle={
+          <Box>
+            <Button component={Link} to={CookeryRouteList.ADD_RECIPE} color="primary" variant="contained" sx={{ marginBottom: 8 }}>
+              Add recipe
+            </Button>
+          </Box>
+        }
+        emptyIconDisplayed={false}
+      />
+    )
+  }
   return (
     <InfiniteScroll
       pageStart={1}
