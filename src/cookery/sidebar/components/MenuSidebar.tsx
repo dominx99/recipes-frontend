@@ -107,6 +107,15 @@ export default function MenuSidebar() {
             </ListItem>
           )}
 
+          {!isAuthenticated() && (
+            <ListItem disablePadding>
+              <ListItemButton component={RouteLink} to={AuthenticationRouteList.AUTHENTICATE} color="inherit" onClick={() => dispatch(toggleMenuSidebar())}>
+                <ListItemIcon><Publish /></ListItemIcon>
+                <ListItemText primary="Login" />
+              </ListItemButton>
+            </ListItem>
+          )}
+
           <ListItem disablePadding>
             <ListItemButton color="inherit" onClick={handleChangeMode}>
               <ListItemIcon>{mode === 'light' ? <Brightness4 /> : <Brightness7 />}</ListItemIcon>
